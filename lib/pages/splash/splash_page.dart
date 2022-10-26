@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:taskez/widgets/widgets.dart';
+import '../../base/base.dart';
+import '../../blocs/blocs.dart';
+import '../../resources/resources.dart';
+
+class SplashPage extends StatefulWidget {
+  final SplashBloc bloc;
+
+  const SplashPage(this.bloc, {Key? key}) : super(key: key);
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends BaseState<SplashPage, SplashBloc> {
+  @override
+  Widget build(BuildContext context) {
+    var sizeLogo = MediaQuery.of(context).size.width * 0.25;
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(VectorImageAssets.icon_logo, height: sizeLogo, width: sizeLogo),
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: Text(
+                "taskez",
+                style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: 48, color: AppColors.primaryBlack2),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  SplashBloc get bloc => widget.bloc;
+}

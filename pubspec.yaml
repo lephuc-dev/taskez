@@ -35,6 +35,9 @@ dependencies:
   firebase_auth: ^3.11.2
   cloud_firestore: ^3.5.1
 
+  # Svg
+  flutter_svg: ^1.1.5
+
   # Equatable
   equatable: ^2.0.5
 
@@ -106,5 +109,10 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: AvenirNextRoundedPro
+      fonts:
+        - asset: assets/fonts/AvenirNextRoundedPro-Med.ttf
+          weight: 700
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

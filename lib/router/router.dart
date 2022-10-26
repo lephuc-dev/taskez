@@ -7,6 +7,8 @@ class Routes {
 
   static String get home => '/home';
 
+  static String get splash => '/splash';
+
   static getRoute(RouteSettings settings) {
     Widget widget;
     try {

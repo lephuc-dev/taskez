@@ -8,5 +8,5 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await AppDependencies.init();
-  runApp(DevicePreview(enabled: true, builder: (context) => const App()));
+  runApp(DevicePreview(enabled: false, builder: (context) => const App()));
 }
