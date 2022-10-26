@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class Routes {
-  static String get welcome => '/welcome';
-
   static String get home => '/home';
 
   static String get splash => '/splash';
+
+  static String get onBoarding => '/onBoarding';
 
   static getRoute(RouteSettings settings) {
     Widget widget;

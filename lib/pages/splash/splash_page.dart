@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:taskez/widgets/widgets.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
 import '../../resources/resources.dart';
+import '../../router/router.dart';
 
 class SplashPage extends StatefulWidget {
   final SplashBloc bloc;
@@ -15,6 +15,12 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends BaseState<SplashPage, SplashBloc> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 1)).then((value) => Navigator.pushNamedAndRemoveUntil(context, Routes.onBoarding, (route) => false));
+  }
+
   @override
   Widget build(BuildContext context) {
     var sizeLogo = MediaQuery.of(context).size.width * 0.25;

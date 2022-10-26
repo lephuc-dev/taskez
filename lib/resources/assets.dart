@@ -14,4 +14,7 @@ class VectorImageAssets {
 
   // START FROM HERE
   static const String icon_logo = '$_pathPrefix/icon_logo.svg';
+  static const String img_on_boarding_1 = '$_pathPrefix/img_on_boarding_1.svg';
+  static const String img_on_boarding_2 = '$_pathPrefix/img_on_boarding_2.svg';
+  static const String img_on_boarding_3 = '$_pathPrefix/img_on_boarding_3.svg';
 }
