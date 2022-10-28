@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import '../../base/base.dart';
 import 'on_boarding.dart';
 
@@ -8,9 +6,6 @@ class OnBoardingBloc extends BaseBloc<OnBoardingState> {
 
   void setIndexPage(int value) {
     emit(OnBoardingState(state: state, indexPage: value));
-    if (kDebugMode) {
-      print(state!.indexPage);
-    }
   }
 
   @override
