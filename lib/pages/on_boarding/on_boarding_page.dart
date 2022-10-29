@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../router/router.dart';
 import '../../widgets/common_button.dart';
 import '../../resources/resources.dart';
 import '../../base/base.dart';
@@ -80,13 +81,17 @@ class _OnBoardingPageState extends BaseState<OnBoardingPage, OnBoardingBloc> {
                 if (snapshot.data == onBoardingData.length - 1) {
                   return CommonButton(
                     content: "Get Started",
-                    onTap: () {},
+                    onTap: () => Navigator.pushNamedAndRemoveUntil(context, Routes.signIn, (route) => false),
                   );
                 } else {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      OnBoardingNavButton(name: "Skip", onPressed: () {}),
+                      OnBoardingNavButton(
+                          name: "Skip",
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(context, Routes.signIn, (route) => false);
+                          }),
                       Row(
                         children: List.generate(onBoardingData.length, (index) => dotIndicator(index)),
                       ),
