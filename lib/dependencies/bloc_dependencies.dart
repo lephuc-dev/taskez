@@ -6,7 +6,7 @@ class BlocDependencies {
     injector.registerFactory<SplashBloc>(() => SplashBloc());
     injector.registerFactory<OnBoardingBloc>(() => OnBoardingBloc());
     injector.registerFactory<SignInBloc>(() => SignInBloc(injector()));
-    injector.registerFactory<SignUpBloc>(() => SignUpBloc());
+    injector.registerFactory<SignUpBloc>(() => SignUpBloc(injector()));
     injector.registerFactory<HomeBloc>(() => HomeBloc());
   }
 }
