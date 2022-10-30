@@ -11,6 +11,8 @@ class Routes {
 
   static String get signIn => '/signIn';
 
+  static String get signUp => '/signUp';
+
   static getRoute(RouteSettings settings) {
     Widget widget;
     try {

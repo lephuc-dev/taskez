@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../router/router.dart';
-import '../../widgets/common_button.dart';
 import '../../resources/resources.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
+import '../../widgets/widgets.dart';
 import 'widgets/on_boarding_content.dart';
 import 'widgets/on_boarding_nav_button.dart';
 

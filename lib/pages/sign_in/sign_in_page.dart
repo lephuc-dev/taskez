@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../widgets/common_dialog.dart';
 import '../../router/router.dart';
-import '../../widgets/loading_overlay.dart';
 import '../../enums/enums.dart';
-import '../../widgets/common_text_field.dart';
 import '../../resources/resources.dart';
-import '../../widgets/common_button.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
+import '../../widgets/widgets.dart';
 
 class SignInPage extends StatefulWidget {
   final SignInBloc bloc;
@@ -151,20 +148,27 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 32.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Already have an account?",
-                                    style: Theme.of(context).textTheme.subtitle2?.copyWith(color: AppColors.primaryGray1),
+                              padding: const EdgeInsets.only(top: 16.0),
+                              child: InkWellWrapper(
+                                borderRadius: BorderRadius.circular(8),
+                                onTap: () => Navigator.pushNamed(context, Routes.signUp),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Already have an account?",
+                                        style: Theme.of(context).textTheme.subtitle2?.copyWith(color: AppColors.primaryGray1),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        "Sign Up",
+                                        style: Theme.of(context).textTheme.headline3?.copyWith(color: AppColors.primaryRed),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    "Sign Up",
-                                    style: Theme.of(context).textTheme.headline3?.copyWith(color: AppColors.primaryRed),
-                                  ),
-                                ],
+                                ),
                               ),
                             ),
                           ],
