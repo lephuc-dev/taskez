@@ -77,10 +77,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
               isLoading: snapshot.data ?? false,
               child: Scaffold(
                 backgroundColor: AppColors.primaryWhite,
-                appBar: AppBar(
-                  backgroundColor: AppColors.primaryWhite,
-                  elevation: 0,
-                ),
+                appBar: commonAppBar(context),
                 body: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(16),

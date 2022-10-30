@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:taskez/resources/colors.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
+import '../../widgets/widgets.dart';
 
 class SignUpPage extends StatefulWidget {
   final SignUpBloc bloc;
@@ -17,6 +19,10 @@ class _SignUpPageState extends BaseState<SignUpPage, SignUpBloc> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: AppColors.primaryWhite,
+      appBar: commonAppBar(context),
+      body: Container(),
+    );
   }
 }
