@@ -9,6 +9,8 @@ class Routes {
 
   static String get onBoarding => '/onBoarding';
 
+  static String get myInformation => '/myInformation';
+
   static getRoute(RouteSettings settings) {
     Widget widget;
     try {
@@ -20,8 +22,7 @@ class Routes {
           child: Builder(
             builder: (context) {
               return const Padding(
-                padding:
-                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+                padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
                 child: Text(
                   '404 NOT FOUND',
                   textAlign: TextAlign.center,
