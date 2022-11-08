@@ -9,9 +9,14 @@ class CommonButton extends StatelessWidget {
   final double? borderRadius;
   final TextStyle? textStyle;
 
-  const CommonButton(
-      {Key? key, required this.content, required this.onTap, this.buttonColor = AppColors.primaryRed, this.borderRadius = 8, this.textStyle})
-      : super(key: key);
+  const CommonButton({
+    Key? key,
+    required this.content,
+    required this.onTap,
+    this.buttonColor = AppColors.primaryRed,
+    this.borderRadius = 8,
+    this.textStyle,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

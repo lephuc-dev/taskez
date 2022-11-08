@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../widgets/inkwell_wrapper.dart';
+
+import '../../../widgets/widgets.dart';
 
 class OnBoardingNavButton extends StatelessWidget {
   const OnBoardingNavButton({
