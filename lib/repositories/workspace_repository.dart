@@ -1,0 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+class WorkspaceRepository {
+  final _fireStoreWorkspace = FirebaseFirestore.instance.collection("WORKSPACES");
+  final _fireStoreBoard = FirebaseFirestore.instance.collection("BOARDS");
+  final _fireStoreWorkspaceParticipant = FirebaseFirestore.instance.collection("WORKSPACE_PARTICIPANT");
+  final _fireStoreUser = FirebaseFirestore.instance.collection("USERS");
+  final _firebaseAuth = FirebaseAuth.instance;
+
+  Stream<QuerySnapshot<dynamic>> getWorkspacesParticipantStream() {
+    return _fireStoreWorkspaceParticipant.where("user_id", isEqualTo: _firebaseAuth.currentUser?.uid).snapshots();
+  }
+
+  Stream<QuerySnapshot<dynamic>> getMyWorkspacesStream(String workspaceId) {
+    return _fireStoreWorkspace.where("id", isEqualTo: workspaceId).snapshots();
+  }
+
+  Stream<QuerySnapshot<dynamic>> getListBoardOfWorkspaceStream(String workspaceId) {
+    return _fireStoreBoard.where("workspace_id", isEqualTo: workspaceId).snapshots();
+  }
+}
