@@ -1,15 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../../../extensions/extensions.dart';
 import '../../../blocs/blocs.dart';
 import '../../../resources/resources.dart';
 import '../../../widgets/widgets.dart';
 
-class WorkspaceView extends StatelessWidget {
+class WorkspaceView extends StatefulWidget {
   final QueryDocumentSnapshot workspaceDocument;
   final HomeBloc bloc;
 
   const WorkspaceView({Key? key, required this.workspaceDocument, required this.bloc}) : super(key: key);
 
+  @override
+  State<WorkspaceView> createState() => _WorkspaceViewState();
+}
+
+class _WorkspaceViewState extends State<WorkspaceView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,14 +32,14 @@ class WorkspaceView extends StatelessWidget {
                   color: AppColors.primaryGreen,
                 ),
                 child: Text(
-                  workspaceDocument["name"].toString()[0],
+                  widget.workspaceDocument["name"].toString()[0],
                   style: Theme.of(context).textTheme.headline1?.copyWith(color: AppColors.primaryWhite, fontSize: 16),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
-                  workspaceDocument["name"],
+                  widget.workspaceDocument["name"],
                   style: Theme.of(context).textTheme.headline4?.copyWith(color: AppColors.primaryWhite),
                 ),
               )
@@ -47,16 +53,16 @@ class WorkspaceView extends StatelessWidget {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, crossAxisSpacing: 8.0, mainAxisSpacing: 8.0, childAspectRatio: 5),
               children: [
-                workspaceShortcut(context, Icons.person, "Member (${1})", () {}),
-                workspaceShortcut(context, Icons.settings, "Setting", () {}),
-                workspaceShortcut(context, Icons.book, "Your task", () {}),
+                workspaceShortcut(Icons.person, "Members (${1})", () {}),
+                workspaceShortcut(Icons.book, "My tasks", () {}),
+                workspaceShortcut(Icons.settings, "Setting", () {}),
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16),
             child: StreamBuilder(
-              stream: bloc.getListBoardOfWorkspaceStream(workspaceDocument["id"]),
+              stream: widget.bloc.getListBoardOfWorkspaceStream(widget.workspaceDocument["id"]),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasData) {
                   return GridView.builder(
@@ -71,9 +77,12 @@ class WorkspaceView extends StatelessWidget {
                     ),
                     itemBuilder: (BuildContext context, int index) {
                       if (index < snapshot.data!.docs.length) {
-                        return boardWidget(context);
+                        return boardWidget(
+                          snapshot.data!.docs[index]["name"],
+                          snapshot.data!.docs[index]["background"],
+                        );
                       } else {
-                        return workspaceShortcut(context, Icons.add, "New board", () {});
+                        return workspaceShortcut(Icons.add, "New board", () {});
                       }
                     },
                   );
@@ -88,7 +97,7 @@ class WorkspaceView extends StatelessWidget {
     );
   }
 
-  Widget workspaceShortcut(BuildContext context, IconData icon, String content, void Function() onTap) {
+  Widget workspaceShortcut(IconData icon, String content, void Function() onTap) {
     return Container(
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -111,9 +120,9 @@ class WorkspaceView extends StatelessWidget {
                 Text(
                   content,
                   style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                        color: AppColors.primaryBlack1,
-                        fontSize: 14,
-                      ),
+                    color: AppColors.primaryBlack1,
+                    fontSize: 14,
+                  ),
                 )
               ],
             ),
@@ -123,15 +132,18 @@ class WorkspaceView extends StatelessWidget {
     );
   }
 
-  Widget boardWidget(BuildContext context) {
+  Widget boardWidget(String name, String background) {
     return Container(
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
-          image: DecorationImage(
-              image: NetworkImage(
-                "https://images.pexels.com/photos/9754/mountains-clouds-forest-fog.jpg?auto=compress&cs=tinysrgb&w=600",
-              ),
-              fit: BoxFit.cover)),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
+        image: background.length > 7
+            ? DecorationImage(
+                image: NetworkImage(background),
+                fit: BoxFit.cover,
+              )
+            : null,
+        color: background.length == 7 ? background.toColor() : null,
+      ),
       child: InkWellWrapper(
           onTap: () {},
           borderRadius: const BorderRadius.all(Radius.circular(4)),
@@ -141,7 +153,7 @@ class WorkspaceView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8),
                 child: Text(
-                  "Object-oriented programming",
+                  name,
                   style: Theme.of(context).textTheme.headline3?.copyWith(color: AppColors.primaryWhite, fontSize: 14),
                 ),
               )

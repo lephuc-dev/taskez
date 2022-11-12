@@ -25,7 +25,7 @@ class CommonTextField extends StatelessWidget {
       controller: textEditingController,
       obscureText: isPasswordTextField!,
       keyboardType: textInputType,
-      cursorColor: AppColors.primaryBlack1,
+      cursorColor: AppColors.primaryWhite,
       decoration: getTextFieldDecoration(context),
       validator: (val) => getValidator(val),
     );
@@ -48,15 +48,15 @@ class CommonTextField extends StatelessWidget {
     return InputDecoration(
       hintText: hintText,
       hintStyle: Theme.of(context).textTheme.subtitle2?.copyWith(color: AppColors.primaryGray1),
-      errorStyle: Theme.of(context).textTheme.subtitle2?.copyWith(color: AppColors.primaryError, fontSize: 14),
+      errorStyle: Theme.of(context).textTheme.subtitle2?.copyWith(color: AppColors.error, fontSize: 14),
       enabledBorder: const UnderlineInputBorder(
         borderSide: BorderSide(color: AppColors.primaryGray1),
       ),
       focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: AppColors.primaryBlack1, width: 1.5),
+        borderSide: BorderSide(color: AppColors.primaryWhite, width: 1.5),
       ),
       errorBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: AppColors.primaryError),
+        borderSide: BorderSide(color: AppColors.error),
       ),
     );
   }

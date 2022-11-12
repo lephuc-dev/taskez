@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import '../resources/resources.dart';
 
-PreferredSizeWidget commonAppBar(BuildContext context, {String? title, bool centerTitle = false}) {
+PreferredSizeWidget commonAppBar(
+  BuildContext context, {
+  String? title,
+  bool centerTitle = false,
+  Color background = AppColors.backgroundDarkMode,
+}) {
   return AppBar(
-    backgroundColor: AppColors.primaryWhite,
+    backgroundColor: background,
     elevation: 0,
-    iconTheme: const IconThemeData(color: AppColors.primaryBlack1),
+    iconTheme: const IconThemeData(color: AppColors.primaryWhite),
     title: title == null
         ? null
         : Text(

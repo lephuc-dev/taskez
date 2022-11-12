@@ -21,14 +21,14 @@ class OnBoardingContent extends StatelessWidget {
           padding: const EdgeInsets.only(top: 32),
           child: Text(
             title,
-            style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 24, color: AppColors.primaryBlack3),
+            style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 24, color: AppColors.yellow),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Text(
             description,
-            style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 18, color: AppColors.primaryBlack3.withOpacity(0.8)),
+            style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 18, color: AppColors.primaryWhite),
             textAlign: TextAlign.center,
           ),
         )

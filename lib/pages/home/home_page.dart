@@ -36,7 +36,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
           slider: sliderView(),
           child: Container(
             padding: const EdgeInsets.all(16),
-            color: AppColors.primaryBlack1,
+            color: AppColors.backgroundDarkMode,
             child: StreamBuilder(
               stream: bloc.getWorkspacesParticipantStream(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -81,7 +81,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
 
   Widget sliderView() {
     return Container(
-      color: AppColors.primaryGray1.withOpacity(0.1),
+      color: AppColors.backgroundSliderMenuDarkMode,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -141,7 +141,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
 
   Widget _appBar() {
     return SliderAppBar(
-      appBarColor: AppColors.primaryBlack1,
+      appBarColor: AppColors.backgroundDarkMode,
       appBarHeight: 50,
       appBarPadding: const EdgeInsets.symmetric(horizontal: 8),
       title: Text(

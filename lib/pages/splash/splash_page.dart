@@ -18,26 +18,38 @@ class _SplashPageState extends BaseState<SplashPage, SplashBloc> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 1)).then((value) => Navigator.pushNamedAndRemoveUntil(context, Routes.onBoarding, (route) => false));
+    Future.delayed(const Duration(seconds: 1)).then(
+      (value) => Navigator.pushNamedAndRemoveUntil(
+        context,
+        Routes.onBoarding,
+        (route) => false,
+      ),
+    );
   }
+
+  Future<bool> onWillPop() async => false;
 
   @override
   Widget build(BuildContext context) {
     var sizeLogo = MediaQuery.of(context).size.width * 0.25;
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(VectorImageAssets.icon_logo, height: sizeLogo, width: sizeLogo),
-            Padding(
-              padding: const EdgeInsets.only(top: 12.0),
-              child: Text(
-                "taskez",
-                style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: 48, color: AppColors.primaryBlack2),
-              ),
-            )
-          ],
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundDarkMode,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(VectorImageAssets.icon_logo, height: sizeLogo, width: sizeLogo),
+              Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Text(
+                  "taskez",
+                  style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: 48, color: AppColors.primaryWhite),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

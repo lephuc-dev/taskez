@@ -50,7 +50,7 @@ class _OnBoardingPageState extends BaseState<OnBoardingPage, OnBoardingBloc> {
       height: 10,
       width: 10,
       decoration: BoxDecoration(
-        color: bloc.state!.indexPage == index ? AppColors.primaryRed : const Color(0xFFD8D8D8),
+        color: bloc.state!.indexPage == index ? AppColors.yellow : const Color(0xFFD8D8D8),
         shape: BoxShape.circle,
       ),
     );
@@ -59,12 +59,13 @@ class _OnBoardingPageState extends BaseState<OnBoardingPage, OnBoardingBloc> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryWhite,
+      backgroundColor: AppColors.backgroundDarkMode,
       body: Column(
         children: [
           Expanded(
             child: PageView.builder(
                 controller: _pageController,
+                physics: const BouncingScrollPhysics(),
                 onPageChanged: (value) => bloc.setIndexPage(value),
                 itemCount: onBoardingData.length,
                 itemBuilder: (context, index) => OnBoardingContent(

@@ -19,7 +19,7 @@ class CommonDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: AppColors.primaryWhite,
+      backgroundColor: AppColors.backgroundSliderMenuDarkMode,
       contentPadding: const EdgeInsets.all(16),
       content: contentDialog(context),
     );

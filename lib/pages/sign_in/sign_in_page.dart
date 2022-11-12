@@ -76,7 +76,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
             return LoadingOverLayWidget(
               isLoading: snapshot.data ?? false,
               child: Scaffold(
-                backgroundColor: AppColors.primaryWhite,
+                backgroundColor: AppColors.backgroundDarkMode,
                 appBar: commonAppBar(context),
                 body: SingleChildScrollView(
                   child: Padding(
@@ -91,7 +91,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
                           children: [
                             Text(
                               "Welcome back",
-                              style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 32, color: AppColors.primaryBlack2),
+                              style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 32, color: AppColors.primaryWhite),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
@@ -104,7 +104,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
                               padding: const EdgeInsets.only(top: 32.0),
                               child: Text(
                                 "Email",
-                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20, color: AppColors.primaryBlack2),
+                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20, color: AppColors.primaryWhite),
                               ),
                             ),
                             CommonTextField(
@@ -117,7 +117,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
                               padding: const EdgeInsets.only(top: 32.0),
                               child: Text(
                                 "Password",
-                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20, color: AppColors.primaryBlack2),
+                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20, color: AppColors.primaryWhite),
                               ),
                             ),
                             CommonTextField(
@@ -133,7 +133,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
                                 alignment: Alignment.centerRight,
                                 child: Text(
                                   "Forgot password",
-                                  style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 18, color: AppColors.primaryBlack2),
+                                  style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 18),
                                 ),
                               ),
                             ),
@@ -161,7 +161,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
                                       const SizedBox(width: 8),
                                       Text(
                                         "Sign Up",
-                                        style: Theme.of(context).textTheme.headline3?.copyWith(color: AppColors.primaryRed),
+                                        style: Theme.of(context).textTheme.headline3?.copyWith(color: AppColors.yellow),
                                       ),
                                     ],
                                   ),
