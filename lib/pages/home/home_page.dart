@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'widgets/workspace_view.dart';
 
@@ -81,7 +82,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
 
   Widget sliderView() {
     return Container(
-      color: AppColors.primaryWhite,
+      color: AppColors.primaryGray1.withOpacity(0.1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

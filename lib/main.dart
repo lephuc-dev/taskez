@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'app.dart';
 
 void main() async {
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: AppColors.primaryWhite));
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: AppColors.primaryWhite,
+    statusBarIconBrightness: Brightness.dark,
+  ));
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await AppDependencies.init();

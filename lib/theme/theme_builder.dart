@@ -34,9 +34,5 @@ class AppThemes {
     fontFamily: 'AvenirNextRoundedPro',
     visualDensity: VisualDensity.adaptivePlatformDensity,
     textTheme: _lightTextTheme,
-    appBarTheme: const AppBarTheme(
-      backwardsCompatibility: true,
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
-    ),
   );
 }
