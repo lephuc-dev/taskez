@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:taskez/pages/home/widgets/workspace_view.dart';
+import 'widgets/workspace_view.dart';
 
 import '../../resources/resources.dart';
 import '../../base/base.dart';
@@ -36,7 +36,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
           slider: sliderView(),
           child: Container(
             padding: const EdgeInsets.all(16),
-            color: AppColors.backgroundDarkMode,
+            color: AppColors.primaryWhite,
             child: StreamBuilder(
               stream: bloc.getWorkspacesParticipantStream(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -81,7 +81,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
 
   Widget sliderView() {
     return Container(
-      color: AppColors.backgroundSliderMenuDarkMode,
+      color: AppColors.primaryWhite,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -141,29 +141,29 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
 
   Widget _appBar() {
     return SliderAppBar(
-      appBarColor: AppColors.backgroundDarkMode,
+      appBarColor: AppColors.primaryWhite,
       appBarHeight: 50,
       appBarPadding: const EdgeInsets.symmetric(horizontal: 8),
       title: Text(
         "Workspaces",
-        style: Theme.of(context).textTheme.headline5?.copyWith(color: AppColors.primaryWhite, fontSize: 20),
+        style: Theme.of(context).textTheme.headline5?.copyWith(color: AppColors.primaryBlack1, fontSize: 20),
       ),
       isTitleCenter: false,
-      drawerIconColor: AppColors.primaryWhite,
+      drawerIconColor: AppColors.primaryBlack1,
       trailing: Row(
         children: const [
           Padding(
             padding: EdgeInsets.only(right: 16.0),
             child: Icon(
               Icons.search,
-              color: AppColors.primaryWhite,
+              color: AppColors.primaryBlack1,
             ),
           ),
           Padding(
             padding: EdgeInsets.only(right: 16.0),
             child: Icon(
               Icons.notifications,
-              color: AppColors.primaryWhite,
+              color: AppColors.primaryBlack1,
             ),
           ),
         ],

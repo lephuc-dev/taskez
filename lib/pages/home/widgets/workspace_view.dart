@@ -40,7 +40,7 @@ class _WorkspaceViewState extends State<WorkspaceView> {
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
                   widget.workspaceDocument["name"],
-                  style: Theme.of(context).textTheme.headline4?.copyWith(color: AppColors.primaryWhite),
+                  style: Theme.of(context).textTheme.headline4,
                 ),
               )
             ],

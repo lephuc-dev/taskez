@@ -6,6 +6,10 @@ class ImageAssets {
 
   // START FROM HERE
   static const String img_phuc = '$_pathPrefix/img_phuc.png';
+  static const String img_splash = '$_pathPrefix/img_splash.png';
+  static const String img_on_boarding_1 = '$_pathPrefix/img_on_boarding_1.png';
+  static const String img_on_boarding_2 = '$_pathPrefix/img_on_boarding_2.png';
+  static const String img_on_boarding_3 = '$_pathPrefix/img_on_boarding_3.png';
 }
 
 // Contains vector image(svg)
@@ -19,7 +23,4 @@ class VectorImageAssets {
   static const String icon_notification = '$_pathPrefix/icon_notification.svg';
   static const String icon_setting = '$_pathPrefix/icon_setting.svg';
   static const String icon_task = '$_pathPrefix/icon_task.svg';
-  static const String img_on_boarding_1 = '$_pathPrefix/img_on_boarding_1.svg';
-  static const String img_on_boarding_2 = '$_pathPrefix/img_on_boarding_2.svg';
-  static const String img_on_boarding_3 = '$_pathPrefix/img_on_boarding_3.svg';
 }

@@ -5,12 +5,14 @@ PreferredSizeWidget commonAppBar(
   BuildContext context, {
   String? title,
   bool centerTitle = false,
-  Color background = AppColors.backgroundDarkMode,
+  Color background = AppColors.primaryWhite,
+  bool automaticallyImplyLeading = true,
 }) {
   return AppBar(
     backgroundColor: background,
+    automaticallyImplyLeading: automaticallyImplyLeading,
     elevation: 0,
-    iconTheme: const IconThemeData(color: AppColors.primaryWhite),
+    iconTheme: const IconThemeData(color: AppColors.primaryBlack1),
     title: title == null
         ? null
         : Text(
