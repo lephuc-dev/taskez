@@ -115,7 +115,7 @@ class _SignUpPageState extends BaseState<SignUpPage, SignUpBloc> {
             return LoadingOverLayWidget(
               isLoading: snapshot.data ?? false,
               child: Scaffold(
-                backgroundColor: AppColors.backgroundDarkMode,
+                backgroundColor: AppColors.primaryWhite,
                 appBar: commonAppBar(context),
                 body: SingleChildScrollView(
                   child: Padding(

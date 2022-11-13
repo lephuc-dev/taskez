@@ -19,7 +19,7 @@ class LoadingOverLayWidget extends StatelessWidget {
             color: AppColors.primaryBlack1.withOpacity(0.3),
           ),
           const SpinKitFadingCircle(
-            color: AppColors.primaryRed,
+            color: AppColors.yellow,
           ),
         ]
       ],

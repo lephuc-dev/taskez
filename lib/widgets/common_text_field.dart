@@ -25,7 +25,7 @@ class CommonTextField extends StatelessWidget {
       controller: textEditingController,
       obscureText: isPasswordTextField!,
       keyboardType: textInputType,
-      cursorColor: AppColors.primaryWhite,
+      cursorColor: AppColors.primaryBlack1,
       decoration: getTextFieldDecoration(context),
       validator: (val) => getValidator(val),
     );
@@ -53,7 +53,7 @@ class CommonTextField extends StatelessWidget {
         borderSide: BorderSide(color: AppColors.primaryGray1),
       ),
       focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: AppColors.primaryWhite, width: 1.5),
+        borderSide: BorderSide(color: AppColors.primaryBlack1, width: 1.5),
       ),
       errorBorder: const UnderlineInputBorder(
         borderSide: BorderSide(color: AppColors.error),

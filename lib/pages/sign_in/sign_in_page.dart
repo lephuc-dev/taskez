@@ -76,7 +76,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
             return LoadingOverLayWidget(
               isLoading: snapshot.data ?? false,
               child: Scaffold(
-                backgroundColor: AppColors.backgroundDarkMode,
+                backgroundColor: AppColors.primaryWhite,
                 appBar: commonAppBar(context),
                 body: SingleChildScrollView(
                   child: Padding(
@@ -91,7 +91,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
                           children: [
                             Text(
                               "Welcome back",
-                              style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 32, color: AppColors.primaryWhite),
+                              style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 32),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
@@ -104,7 +104,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
                               padding: const EdgeInsets.only(top: 32.0),
                               child: Text(
                                 "Email",
-                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20, color: AppColors.primaryWhite),
+                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20),
                               ),
                             ),
                             CommonTextField(
@@ -117,7 +117,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
                               padding: const EdgeInsets.only(top: 32.0),
                               child: Text(
                                 "Password",
-                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20, color: AppColors.primaryWhite),
+                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20),
                               ),
                             ),
                             CommonTextField(
