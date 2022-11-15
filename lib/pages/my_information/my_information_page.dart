@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:taskez/pages/my_information/widgets/listView_item.dart';
-import 'package:taskez/pages/my_information/widgets/statistic.dart';
-import 'package:taskez/widgets/widgets.dart';
+import 'widgets/listView_item.dart';
+import 'widgets/statistic.dart';
+import '../../widgets/widgets.dart';
 import '../../resources/resources.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
@@ -65,24 +65,40 @@ class _MyInformationPageState
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text('120', style: TextStyle(fontSize: 22)),
+                              children: [
+                                Text('120',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1
+                                        ?.copyWith(
+                                            color: AppColors.primaryWhite,
+                                            fontSize: 22)),
                                 Text(
                                   'Create Tasks',
-                                  style:
-                                      TextStyle(color: AppColors.primaryGrey),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1
+                                      ?.copyWith(color: AppColors.primaryGrey),
                                 ),
                               ],
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text('80', style: TextStyle(fontSize: 22)),
+                              children: [
+                                Text('80',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1
+                                        ?.copyWith(
+                                            color: AppColors.primaryWhite,
+                                            fontSize: 22)),
                                 Text(
                                   'Completed Tasks',
-                                  style:
-                                      TextStyle(color: AppColors.primaryGrey),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1
+                                      ?.copyWith(color: AppColors.primaryGrey),
                                 ),
                               ],
                             )
@@ -118,13 +134,14 @@ class _MyInformationPageState
                         children: [
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const <Widget>[
-                              Text(
-                                'Statistic',
-                                style: TextStyle(
-                                    color: AppColors.primaryBlack1,
-                                    fontSize: 22),
-                              ),
+                            children: [
+                              Text('Statistic',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline1
+                                      ?.copyWith(
+                                          color: AppColors.primaryBlack1,
+                                          fontSize: 22)),
                             ],
                           ),
                           Row(

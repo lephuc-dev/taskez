@@ -19,19 +19,22 @@ class ListViewItem extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const <Widget>[
+            children: [
               Padding(
                 padding: EdgeInsets.only(bottom: 3.0),
                 child: Text(
                   'Events',
-                  style: TextStyle(color: AppColors.primaryWhite, fontSize: 20),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      ?.copyWith(color: AppColors.primaryWhite, fontSize: 20),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 3.0),
+                padding: const EdgeInsets.only(top: 3.0),
                 child: Text(
                   '12 Tasks',
-                  style: TextStyle(
+                  style: Theme.of(context).textTheme.headline1?.copyWith(
                       color: AppColors.primaryWhite,
                       fontSize: 16,
                       fontWeight: FontWeight.w400),

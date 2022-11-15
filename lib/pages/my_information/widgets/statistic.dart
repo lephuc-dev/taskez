@@ -34,8 +34,10 @@ class Statistic extends StatelessWidget {
                 ),
                 child: Text(
                   progress,
-                  style: const TextStyle(
-                      color: AppColors.primaryBlack1, fontSize: 18),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline1
+                      ?.copyWith(color: AppColors.primaryBlack1, fontSize: 18),
                 ),
               ),
             ),
@@ -44,8 +46,10 @@ class Statistic extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(
               name,
-              style:
-                  const TextStyle(color: AppColors.primaryBlack1, fontSize: 16),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline1
+                  ?.copyWith(color: AppColors.primaryBlack1, fontSize: 16),
             ),
           ),
         ],
