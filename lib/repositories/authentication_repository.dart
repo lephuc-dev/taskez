@@ -26,7 +26,7 @@ class AuthenticationRepository {
                 "uid": value.user!.uid,
                 "email": email,
                 "name": name,
-                "photo_url": "",
+                "avatar": "",
               }))
           .then((value) => onSignUpSuccess());
     } on FirebaseAuthException catch (e) {

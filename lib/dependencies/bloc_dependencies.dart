@@ -8,6 +8,6 @@ class BlocDependencies {
     injector.registerFactory<MyInformationBloc>(() => MyInformationBloc());
     injector.registerFactory<SignInBloc>(() => SignInBloc(injector()));
     injector.registerFactory<SignUpBloc>(() => SignUpBloc(injector()));
-    injector.registerFactory<HomeBloc>(() => HomeBloc());
+    injector.registerFactory<HomeBloc>(() => HomeBloc(injector()));
   }
 }

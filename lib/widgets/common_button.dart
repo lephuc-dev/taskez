@@ -13,7 +13,7 @@ class CommonButton extends StatelessWidget {
     Key? key,
     required this.content,
     required this.onTap,
-    this.buttonColor = AppColors.primaryRed,
+    this.buttonColor = AppColors.yellow,
     this.borderRadius = 8,
     this.textStyle,
   }) : super(key: key);

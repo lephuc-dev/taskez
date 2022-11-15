@@ -130,7 +130,7 @@ class _SignUpPageState extends BaseState<SignUpPage, SignUpBloc> {
                           children: [
                             Text(
                               "Sign up",
-                              style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 32, color: AppColors.primaryBlack2),
+                              style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 32),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
@@ -143,7 +143,7 @@ class _SignUpPageState extends BaseState<SignUpPage, SignUpBloc> {
                               padding: const EdgeInsets.only(top: 32.0),
                               child: Text(
                                 "Name",
-                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20, color: AppColors.primaryBlack2),
+                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20),
                               ),
                             ),
                             CommonTextField(
@@ -156,7 +156,7 @@ class _SignUpPageState extends BaseState<SignUpPage, SignUpBloc> {
                               padding: const EdgeInsets.only(top: 32.0),
                               child: Text(
                                 "Email",
-                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20, color: AppColors.primaryBlack2),
+                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20),
                               ),
                             ),
                             CommonTextField(
@@ -169,7 +169,7 @@ class _SignUpPageState extends BaseState<SignUpPage, SignUpBloc> {
                               padding: const EdgeInsets.only(top: 32.0),
                               child: Text(
                                 "Password",
-                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20, color: AppColors.primaryBlack2),
+                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20),
                               ),
                             ),
                             CommonTextField(
@@ -183,7 +183,7 @@ class _SignUpPageState extends BaseState<SignUpPage, SignUpBloc> {
                               padding: const EdgeInsets.only(top: 32.0),
                               child: Text(
                                 "Confirm password",
-                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20, color: AppColors.primaryBlack2),
+                                style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20),
                               ),
                             ),
                             CommonTextField(
