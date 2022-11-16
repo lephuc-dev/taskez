@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import '../../../extensions/extensions.dart';
 import '../../../blocs/blocs.dart';
 import '../../../models/models.dart';
@@ -157,7 +156,7 @@ class _WorkspaceViewState extends State<WorkspaceView> {
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Text(
                       "Workspace Participant",
-                      style: Theme.of(context).textTheme.headline4?.copyWith(fontSize: 18),
+                      style: Theme.of(context).textTheme.headline4?.copyWith(fontSize: 20),
                     ),
                   ),
                   ...listParticipant

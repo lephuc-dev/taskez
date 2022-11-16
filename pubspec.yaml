@@ -57,9 +57,6 @@ dependencies:
   # Menu slider drawer
   flutter_slider_drawer: ^2.1.1
 
-  # Profile avatar_stack
-  flutter_profile_picture: ^2.0.0
-
   cupertino_icons: ^1.0.2
 
 

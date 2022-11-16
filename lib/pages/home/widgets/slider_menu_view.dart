@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_profile_picture/flutter_profile_picture.dart';
 import '../../../blocs/blocs.dart';
 import '../../../models/models.dart';
 import '../../../resources/resources.dart';
