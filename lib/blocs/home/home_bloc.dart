@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../base/base.dart';
 import '../../repositories/repositories.dart';
 import '../blocs.dart';
@@ -19,6 +18,10 @@ class HomeBloc extends BaseBloc<HomeState> {
 
   Stream<QuerySnapshot<dynamic>> getListBoardOfWorkspaceStream(String workspaceId) {
     return workspaceRepository.getListBoardOfWorkspaceStream(workspaceId);
+  }
+
+  Stream<QuerySnapshot<dynamic>> getInformationUserStream() {
+    return workspaceRepository.getInformationUserStream();
   }
 
   @override

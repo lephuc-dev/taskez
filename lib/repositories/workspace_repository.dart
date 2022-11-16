@@ -19,4 +19,8 @@ class WorkspaceRepository {
   Stream<QuerySnapshot<dynamic>> getListBoardOfWorkspaceStream(String workspaceId) {
     return _fireStoreBoard.where("workspace_id", isEqualTo: workspaceId).snapshots();
   }
+
+  Stream<QuerySnapshot<dynamic>> getInformationUserStream() {
+    return _fireStoreUser.where("uid", isEqualTo: _firebaseAuth.currentUser?.uid).limit(1).snapshots();
+  }
 }

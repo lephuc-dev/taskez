@@ -29,7 +29,7 @@ class _WorkspaceViewState extends State<WorkspaceView> {
                 padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(4)),
-                  color: AppColors.primaryGreen,
+                  color: AppColors.yellow,
                 ),
                 child: Text(
                   widget.workspaceDocument["name"].toString()[0],
