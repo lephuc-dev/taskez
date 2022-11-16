@@ -43,10 +43,10 @@ class _SliderMenuViewState extends State<SliderMenuView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (userModel.avatar == "")
-                            ProfilePicture(
+                            AvatarWithName(
                               name: userModel.name ?? "?",
-                              radius: 45,
-                              fontsize: 20,
+                              fontSize: 20,
+                              shapeSize: 90,
                               count: 2,
                             )
                           else

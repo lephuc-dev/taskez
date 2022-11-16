@@ -4,3 +4,4 @@ export 'common_text_field.dart';
 export 'loading_overlay.dart';
 export 'inkwell_wrapper.dart';
 export 'common_app_bar.dart';
+export 'avatar_with_name.dart';

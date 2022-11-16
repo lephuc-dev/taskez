@@ -8,8 +8,12 @@ class HomeBloc extends BaseBloc<HomeState> {
 
   HomeBloc(this.workspaceRepository);
 
-  Stream<QuerySnapshot<dynamic>> getWorkspacesParticipantStream() {
-    return workspaceRepository.getWorkspacesParticipantStream();
+  Stream<QuerySnapshot<dynamic>> getWorkspacesParticipantByUidStream() {
+    return workspaceRepository.getWorkspacesParticipantByUidStream();
+  }
+
+  Stream<QuerySnapshot<dynamic>> getWorkspacesParticipantByWorkspaceIdStream(String workspaceId) {
+    return workspaceRepository.getWorkspacesParticipantByWorkspaceIdStream(workspaceId);
   }
 
   Stream<QuerySnapshot<dynamic>> getMyWorkspacesStream(String workspaceId) {
@@ -22,6 +26,10 @@ class HomeBloc extends BaseBloc<HomeState> {
 
   Stream<QuerySnapshot<dynamic>> getInformationUserStream() {
     return workspaceRepository.getInformationUserStream();
+  }
+
+  Stream<QuerySnapshot<dynamic>> getInformationUserByIdStream(String uid) {
+    return workspaceRepository.getInformationUserByIdStream(uid);
   }
 
   @override

@@ -8,8 +8,12 @@ class WorkspaceRepository {
   final _fireStoreUser = FirebaseFirestore.instance.collection("USERS");
   final _firebaseAuth = FirebaseAuth.instance;
 
-  Stream<QuerySnapshot<dynamic>> getWorkspacesParticipantStream() {
+  Stream<QuerySnapshot<dynamic>> getWorkspacesParticipantByUidStream() {
     return _fireStoreWorkspaceParticipant.where("user_id", isEqualTo: _firebaseAuth.currentUser?.uid).snapshots();
+  }
+
+  Stream<QuerySnapshot<dynamic>> getWorkspacesParticipantByWorkspaceIdStream(String workspaceId) {
+    return _fireStoreWorkspaceParticipant.where("workspace_id", isEqualTo: workspaceId).snapshots();
   }
 
   Stream<QuerySnapshot<dynamic>> getMyWorkspacesStream(String workspaceId) {
@@ -22,5 +26,9 @@ class WorkspaceRepository {
 
   Stream<QuerySnapshot<dynamic>> getInformationUserStream() {
     return _fireStoreUser.where("uid", isEqualTo: _firebaseAuth.currentUser?.uid).limit(1).snapshots();
+  }
+
+  Stream<QuerySnapshot<dynamic>> getInformationUserByIdStream(String uid) {
+    return _fireStoreUser.where("uid", isEqualTo: uid).limit(1).snapshots();
   }
 }

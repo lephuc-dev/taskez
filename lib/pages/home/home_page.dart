@@ -34,7 +34,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
             padding: const EdgeInsets.all(16),
             color: AppColors.primaryWhite,
             child: StreamBuilder(
-              stream: bloc.getWorkspacesParticipantStream(),
+              stream: bloc.getWorkspacesParticipantByUidStream(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
