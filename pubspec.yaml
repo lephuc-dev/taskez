@@ -37,7 +37,7 @@ dependencies:
   firebase_core_platform_interface: 4.5.1
 
   # Svg
-  flutter_svg: ^1.1.5
+  flutter_svg: ^1.1.6
 
   # Equatable
   equatable: ^2.0.5
@@ -53,6 +53,9 @@ dependencies:
 
   # Device preview
   device_preview: ^1.1.0
+
+  # Menu slider drawer
+  flutter_slider_drawer: ^2.1.1
 
   cupertino_icons: ^1.0.2
   boardview: ^0.2.2

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../resources/resources.dart';
 
 class AppThemes {
@@ -25,7 +26,7 @@ class AppThemes {
     bodyText1: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, color: AppColors.primaryBlack1),
     bodyText2: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400, color: AppColors.primaryBlack1),
     caption: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700, color: AppColors.primaryBlack1),
-    button: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700, color: AppColors.primaryWhite),
+    button: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: AppColors.primaryBlack1),
     overline: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w700, color: AppColors.primaryBlack1),
   );
 

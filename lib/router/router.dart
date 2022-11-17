@@ -12,6 +12,10 @@ class Routes {
   static String get board => '/board';
 
   static String get task => '/task';
+  
+  static String get signIn => '/signIn';
+
+  static String get signUp => '/signUp';
 
   static getRoute(RouteSettings settings) {
     Widget widget;

@@ -1,13 +1,15 @@
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
+import '../../models/models.dart';
+import '../../resources/resources.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
-import '../../models/models.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+import 'widgets/workspace_view.dart';
+import 'widgets/slider_menu_view.dart';
 
 class HomePage extends StatefulWidget {
-
-  final ProductBloc bloc;
+  final HomeBloc bloc;
 
   const HomePage(this.bloc, {Key? key}) : super(key: key);
 
@@ -15,8 +17,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends BaseState<HomePage, ProductBloc> {
-
+class _HomePageState extends BaseState<HomePage, HomeBloc> {
   @override
   void initState() {
     super.initState();
@@ -24,38 +25,88 @@ class _HomePageState extends BaseState<HomePage, ProductBloc> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: StreamBuilder<List<ProductModel>?>(
-        stream: widget.bloc.list,
-        builder: (context, snapshot) {
-          bloc.loadData();
-          if (!snapshot.hasData) {
-            return const Center(
-              child: SpinKitFadingCircle(color: Colors.blue),
-            );
-          } else {
-            return ListView.builder(
-                itemCount: snapshot.data!.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: ListTile(
-                      title: Text(snapshot.data![index].name!, style: appTheme.textTheme.bodyText1),
-                      trailing: Text(snapshot.data![index].price!, style: appTheme.textTheme.bodyText2),
-                    ),
+    return SafeArea(
+      child: Scaffold(
+        body: SliderDrawer(
+          appBar: _appBar(),
+          slider: SliderMenuView(bloc),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            color: AppColors.primaryWhite,
+            child: StreamBuilder<List<WorkspaceParticipant>>(
+              stream: bloc.getWorkspacesParticipantByUidStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, i) {
+                        return StreamBuilder<Workspace>(
+                            stream: bloc.getMyWorkspacesStream(snapshot.data?[i].workspaceId ?? ""),
+                            builder: (context, myWorkspaceSnapshot) {
+                              if (myWorkspaceSnapshot.hasData) {
+                                if (myWorkspaceSnapshot.data == null) {
+                                  return const Center(
+                                    child: Text("workspace in4 null"),
+                                  );
+                                } else {
+                                  return WorkspaceView(
+                                    workspace: myWorkspaceSnapshot.data!,
+                                    bloc: bloc,
+                                  );
+                                }
+                              } else {
+                                return const Center(
+                                  child: Text("No in4 workspace"),
+                                );
+                              }
+                            });
+                      });
+                } else {
+                  return const SpinKitFadingCircle(
+                    color: AppColors.primaryWhite,
                   );
-                });
-          }
-        },
+                }
+              },
+            ),
+          ),
+        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => bloc.addData("pen", "10"),
-        child: const Icon(Icons.add),
+    );
+  }
+
+  Widget _appBar() {
+    return SliderAppBar(
+      appBarColor: AppColors.primaryWhite,
+      appBarHeight: 50,
+      appBarPadding: const EdgeInsets.symmetric(horizontal: 8),
+      title: Text(
+        "Workspaces",
+        style: Theme.of(context).textTheme.headline5?.copyWith(color: AppColors.primaryBlack1, fontSize: 20),
+      ),
+      isTitleCenter: false,
+      drawerIconColor: AppColors.primaryBlack1,
+      trailing: Row(
+        children: const [
+          Padding(
+            padding: EdgeInsets.only(right: 16.0),
+            child: Icon(
+              Icons.search,
+              color: AppColors.primaryBlack1,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 16.0),
+            child: Icon(
+              Icons.notifications,
+              color: AppColors.primaryBlack1,
+            ),
+          ),
+        ],
       ),
     );
   }
 
   @override
-  ProductBloc get bloc => widget.bloc;
+  HomeBloc get bloc => widget.bloc;
 }
