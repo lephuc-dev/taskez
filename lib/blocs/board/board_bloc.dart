@@ -7,16 +7,16 @@ import 'board_state.dart';
 
 class BoardBloc extends BaseBloc<BoardState> {
 
-  final BoardRespository boardRespository;
+  final BoardRepository boardRepository;
 
-  BoardBloc(this.boardRespository);
+  BoardBloc(this.boardRepository);
 
   Stream<QuerySnapshot<dynamic>> getListTaskCardByBoardidStream(String board_id){
-    return boardRespository.getListTaskCardByBoardidStream(board_id);
+    return boardRepository.getListTaskCardByBoardidStream(board_id);
   }
 
   Stream<QuerySnapshot<dynamic>> getListListTaskByBoardidStream(String board_id){
-    return boardRespository.getListListTaskByBoardidStream(board_id);
+    return boardRepository.getListListTaskByBoardidStream(board_id);
   }
 
   @override

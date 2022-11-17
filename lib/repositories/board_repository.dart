@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/models.dart';
 import 'package:flutter/foundation.dart';
 
-class BoardRespository{
+class BoardRepository{
   final _boardFirestore = FirebaseFirestore.instance.collection("BOARDS");
   final _fireStoreTasks = FirebaseFirestore.instance.collection("TASK");
   final _fireStoreListTasks = FirebaseFirestore.instance.collection("LIST_TASKS");

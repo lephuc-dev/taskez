@@ -1,4 +1,3 @@
-export 'product_repository.dart';
 export 'board_repository.dart';
 export 'authentication_repository.dart';
 export 'workspace_repository.dart';
