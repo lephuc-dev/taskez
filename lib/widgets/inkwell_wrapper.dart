@@ -30,10 +30,10 @@ class InkWellWrapper extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: onTap,
-            child: child,
             highlightColor: highlightColor,
             splashColor: splashColor,
             hoverColor: hoverColor,
+            child: child,
           ),
         ),
       ),

@@ -1,7 +1,7 @@
+import '../../models/models.dart';
 import '../../resources/resources.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
@@ -33,17 +33,17 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
           child: Container(
             padding: const EdgeInsets.all(16),
             color: AppColors.primaryWhite,
-            child: StreamBuilder(
+            child: StreamBuilder<List<WorkspaceParticipant>>(
               stream: bloc.getWorkspacesParticipantByUidStream(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
+                      itemCount: snapshot.data!.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, i) {
-                        return StreamBuilder(
-                            stream: bloc.getMyWorkspacesStream(snapshot.data!.docs[i]["workspace_id"]),
-                            builder: (context, AsyncSnapshot<QuerySnapshot> myWorkspaceSnapshot) {
+                        return StreamBuilder<Workspace>(
+                            stream: bloc.getMyWorkspacesStream(snapshot.data?[i].workspaceId ?? ""),
+                            builder: (context, myWorkspaceSnapshot) {
                               if (myWorkspaceSnapshot.hasData) {
                                 if (myWorkspaceSnapshot.data == null) {
                                   return const Center(
@@ -51,7 +51,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                                   );
                                 } else {
                                   return WorkspaceView(
-                                    workspaceDocument: myWorkspaceSnapshot.data!.docs[0],
+                                    workspace: myWorkspaceSnapshot.data!,
                                     bloc: bloc,
                                   );
                                 }

@@ -30,20 +30,19 @@ class _SliderMenuViewState extends State<SliderMenuView> {
             splashColor: AppColors.splashInkWell.withOpacity(0.2),
             hoverColor: AppColors.splashInkWell.withOpacity(0.2),
             highlightColor: AppColors.splashInkWell.withOpacity(0.2),
-            child: StreamBuilder(
+            child: StreamBuilder<User>(
                 stream: widget.bloc.getInformationUserStream(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    UserModel userModel = UserModel.fromDocumentSnapshot(snapshot.data?.docs[0]);
                     return Container(
                       width: MediaQuery.of(context).size.width,
                       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          if (userModel.avatar == "")
+                          if (snapshot.data?.avatar == "")
                             AvatarWithName(
-                              name: userModel.name ?? "?",
+                              name: snapshot.data?.name ?? "?",
                               fontSize: 20,
                               shapeSize: 90,
                               count: 2,
@@ -54,20 +53,20 @@ class _SliderMenuViewState extends State<SliderMenuView> {
                               backgroundColor: AppColors.yellow,
                               child: CircleAvatar(
                                 radius: 40,
-                                backgroundImage: NetworkImage(userModel.avatar!),
+                                backgroundImage: NetworkImage(snapshot.data?.avatar ?? ""),
                               ),
                             ),
                           Padding(
                             padding: const EdgeInsets.only(top: 16.0),
                             child: Text(
-                              userModel.name ?? "Unknown",
+                              snapshot.data?.name ?? "Unknown",
                               style: Theme.of(context).textTheme.headline4?.copyWith(fontSize: 20),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 4.0),
                             child: Text(
-                              userModel.email ?? "Unknown",
+                              snapshot.data?.email ?? "Unknown",
                               style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 14),
                             ),
                           ),

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../../extensions/extensions.dart';
 import '../../../blocs/blocs.dart';
@@ -7,10 +6,10 @@ import '../../../resources/resources.dart';
 import '../../../widgets/widgets.dart';
 
 class WorkspaceView extends StatefulWidget {
-  final QueryDocumentSnapshot workspaceDocument;
+  final Workspace workspace;
   final HomeBloc bloc;
 
-  const WorkspaceView({Key? key, required this.workspaceDocument, required this.bloc}) : super(key: key);
+  const WorkspaceView({Key? key, required this.workspace, required this.bloc}) : super(key: key);
 
   @override
   State<WorkspaceView> createState() => _WorkspaceViewState();
@@ -27,7 +26,7 @@ class _WorkspaceViewState extends State<WorkspaceView> {
           Row(
             children: [
               AvatarWithName(
-                name: widget.workspaceDocument["name"].toString()[0],
+                name: widget.workspace.name.toString()[0],
                 fontSize: 16,
                 shapeSize: 40,
                 boxShape: BoxShape.rectangle,
@@ -35,7 +34,7 @@ class _WorkspaceViewState extends State<WorkspaceView> {
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: Text(
-                  widget.workspaceDocument["name"],
+                  widget.workspace.name ?? "",
                   style: Theme.of(context).textTheme.headline4,
                 ),
               )
@@ -53,13 +52,13 @@ class _WorkspaceViewState extends State<WorkspaceView> {
                 childAspectRatio: 5,
               ),
               children: [
-                StreamBuilder(
-                    stream: widget.bloc.getWorkspacesParticipantByWorkspaceIdStream(widget.workspaceDocument["id"]),
-                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                StreamBuilder<List<WorkspaceParticipant>>(
+                    stream: widget.bloc.getWorkspacesParticipantByWorkspaceIdStream(widget.workspace.id!),
+                    builder: (context, snapshot) {
                       return workspaceItem(
                         Icons.person,
-                        "Members (${snapshot.data?.docs.length ?? 0})",
-                        () => showWorkspaceParticipantDialog(snapshot.data?.docs ?? []),
+                        "Members (${snapshot.data?.length ?? 0})",
+                        () => showWorkspaceParticipantDialog(snapshot.data ?? []),
                       );
                     }),
                 workspaceItem(
@@ -88,14 +87,14 @@ class _WorkspaceViewState extends State<WorkspaceView> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16),
-            child: StreamBuilder(
-              stream: widget.bloc.getListBoardOfWorkspaceStream(widget.workspaceDocument["id"]),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            child: StreamBuilder<List<Board>>(
+              stream: widget.bloc.getListBoardOfWorkspaceStream(widget.workspace.id!),
+              builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data!.docs.length + 1,
+                    itemCount: snapshot.data!.length + 1,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 8.0,
@@ -103,10 +102,10 @@ class _WorkspaceViewState extends State<WorkspaceView> {
                       childAspectRatio: 2.0,
                     ),
                     itemBuilder: (BuildContext context, int index) {
-                      if (index < snapshot.data!.docs.length) {
+                      if (index < snapshot.data!.length) {
                         return boardWidget(
-                          snapshot.data!.docs[index]["name"],
-                          snapshot.data!.docs[index]["background"],
+                          snapshot.data![index].name ?? "",
+                          snapshot.data![index].background ?? "",
                         );
                       } else {
                         return workspaceItem(Icons.add, "New board", () {});
@@ -124,15 +123,15 @@ class _WorkspaceViewState extends State<WorkspaceView> {
     );
   }
 
-  void showWorkspaceParticipantDialog(List<QueryDocumentSnapshot<Object?>> listParticipant) {
+  void showWorkspaceParticipantDialog(List<WorkspaceParticipant> listWorkspaceParticipant) {
     showDialog(
         context: context,
         builder: (context) {
-          return buildWorkspaceParticipantDialog(listParticipant);
+          return buildWorkspaceParticipantDialog(listWorkspaceParticipant);
         });
   }
 
-  Widget buildWorkspaceParticipantDialog(List<QueryDocumentSnapshot<Object?>> listParticipant) {
+  Widget buildWorkspaceParticipantDialog(List<WorkspaceParticipant> listWorkspaceParticipant) {
     return AlertDialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 16),
       contentPadding: const EdgeInsets.all(0),
@@ -159,16 +158,16 @@ class _WorkspaceViewState extends State<WorkspaceView> {
                       style: Theme.of(context).textTheme.headline4?.copyWith(fontSize: 20),
                     ),
                   ),
-                  ...listParticipant
-                      .map((e) => StreamBuilder(
-                            stream: widget.bloc.getInformationUserByIdStream(e["user_id"]),
-                            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  ...listWorkspaceParticipant
+                      .map((e) => StreamBuilder<User>(
+                            stream: widget.bloc.getInformationUserByIdStream(e.userId ?? ""),
+                            builder: (context, snapshot) {
                               if (snapshot.hasData) {
-                                UserModel userModel = UserModel.fromDocumentSnapshot(snapshot.data?.docs[0]);
+                                User? user = snapshot.data;
                                 return workSpaceParticipantItem(
-                                  image: userModel.avatar ?? "",
-                                  name: userModel.name ?? "",
-                                  role: e["role"] ?? "",
+                                  image: user?.avatar ?? "",
+                                  name: user?.name ?? "",
+                                  role: e.role ?? "",
                                 );
                               } else {
                                 return Container();
@@ -215,7 +214,7 @@ class _WorkspaceViewState extends State<WorkspaceView> {
                 children: [
                   if (image == "")
                     AvatarWithName(
-                      name: name ?? "",
+                      name: name,
                       fontSize: 14,
                       shapeSize: 40,
                       count: 2,
@@ -295,7 +294,9 @@ class _WorkspaceViewState extends State<WorkspaceView> {
         color: background.length == 7 ? background.toColor() : null,
       ),
       child: InkWellWrapper(
-          onTap: () {},
+          onTap: () {
+            ///[HOANG-TODO]: Thêm sự kiển chuyển sang board page
+          },
           borderRadius: const BorderRadius.all(Radius.circular(4)),
           child: Stack(
             children: [
