@@ -13,6 +13,8 @@ class Routes {
 
   static String get signUp => '/signUp';
 
+  static String get notification => '/notification';
+
   static getRoute(RouteSettings settings) {
     Widget widget;
     try {
