@@ -9,6 +9,10 @@ class Routes {
 
   static String get onBoarding => '/onBoarding';
 
+  static String get board => '/board';
+
+  static String get task => '/task';
+
   static getRoute(RouteSettings settings) {
     Widget widget;
     try {

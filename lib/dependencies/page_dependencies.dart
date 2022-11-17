@@ -8,5 +8,7 @@ class PageDependencies {
     injector.registerFactory<Widget>(() => HomePage(injector()), instanceName: Routes.home);
     injector.registerFactory<Widget>(() => SplashPage(injector()), instanceName: Routes.splash);
     injector.registerFactory<Widget>(() => OnBoardingPage(injector()), instanceName: Routes.onBoarding);
+    injector.registerFactory<Widget>(() => BoardPage(injector()), instanceName: Routes.board);
+    injector.registerFactory<Widget>(() => TaskPage(injector()), instanceName: Routes.task);
   }
 }
