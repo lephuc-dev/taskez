@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskez/models/models.dart';
+import 'package:taskez/router/router.dart';
 import '../../../resources/resources.dart';
 import '../../../blocs/blocs.dart';
 import '../../../widgets/widgets.dart';
@@ -54,7 +55,7 @@ class _ProjectsTabState extends State<ProjectsTab> {
 
   Widget projectItem({required Project project}) {
     return InkWellWrapper(
-      onTap: () {},
+      onTap: () => Navigator.pushNamed(context, Routes.project, arguments: {"project": project}),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -15,6 +15,8 @@ class Routes {
 
   static String get workspaceInformation => '/workspaceInformation';
 
+  static String get project => '/project';
+
   static getRoute(RouteSettings settings) {
     Widget widget;
     try {
