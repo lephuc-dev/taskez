@@ -54,9 +54,6 @@ dependencies:
   # Device preview
   device_preview: ^1.1.0
 
-  # Menu slider drawer
-  flutter_slider_drawer: ^2.1.1
-
   cupertino_icons: ^1.0.2
 
 

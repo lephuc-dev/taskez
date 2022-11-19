@@ -13,6 +13,8 @@ class Routes {
 
   static String get signUp => '/signUp';
 
+  static String get workspaceInformation => '/workspaceInformation';
+
   static getRoute(RouteSettings settings) {
     Widget widget;
     try {
