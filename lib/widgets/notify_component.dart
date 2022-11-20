@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../enums/enums.dart';
 import '../resources/colors.dart';
+import '../../../widgets/widgets.dart';
+import 'package:intl/intl.dart';
 
 class NotifyComponent extends StatelessWidget {
   final String list;
@@ -12,26 +14,38 @@ class NotifyComponent extends StatelessWidget {
   final String expiredtime;
   final String time;
   final String avt;
-  final String change;
+  final String objectchange;
+  final String project;
+  final bool seen;
   final void Function() onTap;
 
   const NotifyComponent({
     Key? key,
     this.list = '',
-    required this.card,
+    this.project = '',
+    this.card = '',
     this.board = '',
     this.user = '',
-    this.avt='',
-    this.change = '',
+    this.avt = '',
+    this.objectchange = '',
     required this.type,
     this.expiredtime = '',
     required this.time,
     required this.onTap,
+    required this.seen,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          left: BorderSide(
+            color: AppColors.primaryBlue1,
+            width: 4.0,
+          ),
+        ),
+      ),
       padding: const EdgeInsets.only(top: 10),
       child: ListTile(
         onTap: onTap,
@@ -40,8 +54,18 @@ class NotifyComponent extends StatelessWidget {
                 FontAwesomeIcons.clock,
                 size: 40,
               )
-            : Image.network(
-                avt,width: 40,height: 40,),
+            : avt != ""
+                ? Image.network(
+                    avt,
+                    width: 40,
+                    height: 40,
+                  )
+                : AvatarWithName(
+                    name: user,
+                    fontSize: 14,
+                    shapeSize: 40,
+                    count: user.split(' ').length,
+                  ),
         title: content(type),
         subtitle: Container(
           decoration: const BoxDecoration(
@@ -49,15 +73,32 @@ class NotifyComponent extends StatelessWidget {
                   bottom:
                       BorderSide(width: 0.5, color: AppColors.primaryGray2))),
           child: Container(
-            padding: const EdgeInsets.only(bottom: 15,top: 2),
+            padding: const EdgeInsets.only(bottom: 15, top: 2),
             child: Text(
-              time,
+              convertDate(time),
               style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w300),
             ),
           ),
         ),
       ),
     );
+  }
+
+  String convertDate(String date) {
+    String temp = "";
+    int i = 0;
+    DateTime dateTime = DateTime.parse(date);
+    DateFormat('dd MM kk:mm')
+        .format(dateTime)
+        .toString()
+        .split(' ')
+        .forEach((element) => {
+              temp = temp + element,
+              if (i == 0) temp = '$temp thg ',
+              if (i == 1) temp = '$temp lúc ',
+              i++
+            });
+    return temp;
   }
 
   Widget content(Type type) {
@@ -99,7 +140,7 @@ class NotifyComponent extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const TextSpan(text: ' đã thay đổi '),
-                TextSpan(text: change),
+                TextSpan(text: objectchange),
                 const TextSpan(text: ' của thẻ '),
                 TextSpan(
                   text: card,
@@ -162,6 +203,25 @@ class NotifyComponent extends StatelessWidget {
                 const TextSpan(text: ' ở bảng '),
                 TextSpan(
                   text: board,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ]),
+        );
+      case Type.invite:
+        return RichText(
+          text: TextSpan(
+              style: const TextStyle(
+                  fontWeight: FontWeight.normal,
+                  color: AppColors.primaryBlack3,
+                  fontSize: 15),
+              children: <TextSpan>[
+                TextSpan(
+                  text: user,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const TextSpan(text: ' đã mời bạn tham gia '),
+                TextSpan(
+                  text: project,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ]),
