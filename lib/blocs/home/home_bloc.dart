@@ -1,24 +1,31 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../base/base.dart';
+import '../../models/models.dart';
 import '../../repositories/repositories.dart';
 import '../blocs.dart';
 
 class HomeBloc extends BaseBloc<HomeState> {
-  final WorkspaceRepository workspaceRepository;
+  final AuthenticationRepository authenticationRepository;
+  final UserRepository userRepository;
+  final ProjectRepository projectRepository;
+  final ProjectParticipantRepository projectParticipantRepository;
 
-  HomeBloc(this.workspaceRepository);
+  HomeBloc(this.authenticationRepository, this.userRepository, this.projectRepository, this.projectParticipantRepository);
 
-  Stream<QuerySnapshot<dynamic>> getWorkspacesParticipantStream() {
-    return workspaceRepository.getWorkspacesParticipantStream();
+  Stream<User> getInformationUserStream() {
+    return userRepository.getInformationUserByIdStream(authenticationRepository.getCurrentUserId());
   }
 
-  Stream<QuerySnapshot<dynamic>> getMyWorkspacesStream(String workspaceId) {
-    return workspaceRepository.getMyWorkspacesStream(workspaceId);
+  Stream<User> getInformationUserByIdStream(String uid) {
+    return userRepository.getInformationUserByIdStream(uid);
   }
 
-  Stream<QuerySnapshot<dynamic>> getListBoardOfWorkspaceStream(String workspaceId) {
-    return workspaceRepository.getListBoardOfWorkspaceStream(workspaceId);
+  Stream<List<ProjectParticipant>> getListProjectByMyIdStream() {
+    return projectParticipantRepository.getListProjectParticipantByUidStream(authenticationRepository.getCurrentUserId());
+  }
+
+  Stream<Project> getProjectStream(String projectId) {
+    return projectRepository.getProjectStream(projectId);
   }
 
   @override

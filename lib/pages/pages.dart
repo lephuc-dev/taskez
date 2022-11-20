@@ -7,3 +7,4 @@ export 'sign_up/sign_up.dart';
 export 'settings/settings.dart';
 export 'change_password/change_password.dart';
 export 'edit_profiles/edit_profiles.dart';
+export 'project/project.dart';

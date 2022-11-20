@@ -5,6 +5,10 @@ class AuthenticationRepository {
   final _firebaseAuth = FirebaseAuth.instance;
   final _fireStore = FirebaseFirestore.instance.collection("USERS");
 
+  String getCurrentUserId() {
+    return _firebaseAuth.currentUser?.uid ?? "";
+  }
+
   Future<void> signIn(String email, String password, Function onSignInSuccess, Function(String) onSignInError) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password).then((value) => onSignInSuccess());

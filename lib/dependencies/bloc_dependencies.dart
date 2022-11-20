@@ -12,9 +12,10 @@ class BlocDependencies {
     injector.registerFactory<MyInformationBloc>(() => MyInformationBloc(injector()));
     injector.registerFactory<SignInBloc>(() => SignInBloc(injector()));
     injector.registerFactory<SignUpBloc>(() => SignUpBloc(injector()));
-    injector.registerFactory<HomeBloc>(() => HomeBloc(injector()));
     injector.registerFactory<SettingsBloc>(() => SettingsBloc());
     injector.registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector()));
     injector.registerFactory<EditProfilesBloc>(() => EditProfilesBloc(injector()));
+    injector.registerFactory<HomeBloc>(() => HomeBloc(injector(), injector(), injector(), injector()));
+    injector.registerFactory<ProjectBloc>(() => ProjectBloc(injector()));
   }
 }

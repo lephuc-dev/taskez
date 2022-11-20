@@ -19,4 +19,6 @@ class AppColors {
   static const Color error = Color(0xFFF24147);
   static const Color splashInkWell = Color(0xFFCAECFD);
   static const Color yellow = Color(0xFFFFD101);
+  static const Color darkSilver = Color(0xFF707070);
+  static const Color magnolia = Color(0xFFF5F5F5);
 }

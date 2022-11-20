@@ -1,17 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'widgets/workspace_view.dart';
-
 import '../../resources/resources.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
-import '../../widgets/widgets.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
-
-import 'widgets/slider_menu_item.dart';
+import 'widgets/slider_menu_view.dart';
+import 'widgets/projects_tab.dart';
 
 class HomePage extends StatefulWidget {
   final HomeBloc bloc;
@@ -22,152 +14,70 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends BaseState<HomePage, HomeBloc> {
+class _HomePageState extends BaseState<HomePage, HomeBloc> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    tabController = TabController(length: 3, vsync: this);
   }
+
+  static const List<Tab> _tabs = [
+    Tab(text: "Project"),
+    Tab(text: "My Task"),
+    Tab(text: "Schedule"),
+  ];
+
+  late TabController tabController;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: SliderDrawer(
-          appBar: _appBar(),
-          slider: sliderView(),
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            color: AppColors.primaryWhite,
-            child: StreamBuilder(
-              stream: bloc.getWorkspacesParticipantStream(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, i) {
-                        return StreamBuilder(
-                            stream: bloc.getMyWorkspacesStream(snapshot.data!.docs[i]["workspace_id"]),
-                            builder: (context, AsyncSnapshot<QuerySnapshot> myWorkspaceSnapshot) {
-                              if (myWorkspaceSnapshot.hasData) {
-                                if (myWorkspaceSnapshot.data == null) {
-                                  return const Center(
-                                    child: Text("workspace in4 null"),
-                                  );
-                                } else {
-                                  return WorkspaceView(
-                                    workspaceDocument: myWorkspaceSnapshot.data!.docs[0],
-                                    bloc: bloc,
-                                  );
-                                }
-                              } else {
-                                return const Center(
-                                  child: Text("No in4 workspace"),
-                                );
-                              }
-                            });
-                      });
-                } else {
-                  return const SpinKitFadingCircle(
-                    color: AppColors.primaryWhite,
-                  );
-                }
-              },
-            ),
+        backgroundColor: AppColors.primaryWhite,
+        drawer: SliderMenuView(bloc),
+        appBar: AppBar(
+          title: Text(
+            "Taskez",
+            style: Theme.of(context).textTheme.headline5?.copyWith(color: AppColors.primaryBlack1, fontSize: 20),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget sliderView() {
-    return Container(
-      color: AppColors.primaryGray1.withOpacity(0.1),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWellWrapper(
-            onTap: () {},
-            splashColor: AppColors.splashInkWell.withOpacity(0.2),
-            hoverColor: AppColors.splashInkWell.withOpacity(0.2),
-            highlightColor: AppColors.splashInkWell.withOpacity(0.2),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const CircleAvatar(
-                    radius: 45,
-                    backgroundColor: AppColors.primaryBlue,
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundImage: AssetImage(ImageAssets.img_phuc),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Text(
-                      'Phuc Le',
-                      style: Theme.of(context).textTheme.headline4?.copyWith(fontSize: 20),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: Text(
-                      'phuc@gmail.com',
-                      style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 14),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      'View profile',
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(color: AppColors.primaryGreen, fontSize: 14),
-                    ),
-                  ),
-                ],
+          centerTitle: false,
+          backgroundColor: AppColors.primaryWhite,
+          elevation: 0.5,
+          iconTheme: const IconThemeData(color: AppColors.primaryBlack1),
+          actions: const [
+            Padding(
+              padding: EdgeInsets.only(right: 16.0),
+              child: Icon(
+                Icons.search,
+                color: AppColors.primaryBlack1,
               ),
             ),
-          ),
-          SliderMenuItem(title: 'My tasks', icon: VectorImageAssets.icon_task, onTap: () {}),
-          SliderMenuItem(title: 'Notifications', icon: VectorImageAssets.icon_notification, onTap: () {}),
-          SliderMenuItem(title: 'Setting', icon: VectorImageAssets.icon_setting, onTap: () {}),
-          SliderMenuItem(title: 'Help', icon: VectorImageAssets.icon_help, onTap: () {}),
-          SliderMenuItem(title: 'Log out', icon: VectorImageAssets.icon_logout, onTap: () {})
-        ],
-      ),
-    );
-  }
-
-  Widget _appBar() {
-    return SliderAppBar(
-      appBarColor: AppColors.primaryWhite,
-      appBarHeight: 50,
-      appBarPadding: const EdgeInsets.symmetric(horizontal: 8),
-      title: Text(
-        "Workspaces",
-        style: Theme.of(context).textTheme.headline5?.copyWith(color: AppColors.primaryBlack1, fontSize: 20),
-      ),
-      isTitleCenter: false,
-      drawerIconColor: AppColors.primaryBlack1,
-      trailing: Row(
-        children: const [
-          Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: Icon(
-              Icons.search,
-              color: AppColors.primaryBlack1,
+            Padding(
+              padding: EdgeInsets.only(right: 16.0),
+              child: Icon(
+                Icons.notifications,
+                color: AppColors.primaryBlack1,
+              ),
             ),
+          ],
+          bottom: TabBar(
+            controller: tabController,
+            physics: const BouncingScrollPhysics(),
+            labelStyle: Theme.of(context).textTheme.subtitle1,
+            labelColor: AppColors.primaryBlack1,
+            indicatorColor: AppColors.yellow,
+            tabs: _tabs,
           ),
-          Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: Icon(
-              Icons.notifications,
-              color: AppColors.primaryBlack1,
-            ),
-          ),
-        ],
+        ),
+        body: TabBarView(
+          physics: const BouncingScrollPhysics(),
+          controller: tabController,
+          children: [
+            ProjectsTab(bloc: widget.bloc),
+            const Center(child: Text('Content of Tab Two')),
+            const Center(child: Text('Content of Tab Three')),
+          ],
+        ),
       ),
     );
   }
