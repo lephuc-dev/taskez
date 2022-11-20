@@ -5,10 +5,12 @@ import 'package:boardview/boardview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:taskez/models/list_card_model.dart';
 import 'package:taskez/models/task_card_model.dart';
 import 'package:taskez/repositories/repositories.dart';
+import 'package:taskez/theme/theme.dart';
 import 'package:taskez/widgets/elevated_button.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
@@ -39,6 +41,8 @@ class _BoardPageState extends BaseState<BoardPage, BoardBloc> {
 
   @override
   Widget build(BuildContext context) {
+    final board_id =  (ModalRoute.of(context)!.settings.arguments as Map)["board_id"] as String;
+    _listData.clear();
     // List<BoardList> _lists = [];
     // for (int i = 0; i < _listData.length; i++) {
     //   _lists.add(_createBoardList(_listData[i]) as BoardList);
@@ -46,9 +50,9 @@ class _BoardPageState extends BaseState<BoardPage, BoardBloc> {
     return SafeArea(
         child: Scaffold(
             backgroundColor: AppColors.primaryChathamsBlue.withOpacity(0.9),
-            appBar: AppBar(centerTitle: true,title: Text("Table"),),
+            appBar: _appBarBoardView(),
             body: StreamBuilder(
-              stream: bloc.getListListTaskByBoardidStream("1667549331948"),
+              stream: bloc.getListListTaskByBoardidStream(board_id),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if(snapshot.hasData) {
                   _listData.clear();
@@ -58,7 +62,7 @@ class _BoardPageState extends BaseState<BoardPage, BoardBloc> {
                   });
                   return Container(
                     child: StreamBuilder(
-                        stream: bloc.getListTaskCardByBoardidStream("1667549331948"),
+                        stream: bloc.getListTaskCardByBoardidStream(board_id),
                         builder: (context,
                             AsyncSnapshot<QuerySnapshot> tasksnapshot) {
                           if (tasksnapshot.hasData) {
@@ -78,8 +82,14 @@ class _BoardPageState extends BaseState<BoardPage, BoardBloc> {
                             return Container(
                               child: SizedBox(
                                 width: MediaQuery.of(context).size.width,
-                                child: Row(
+                                child: Column(
                                   children: [
+                                    Container(
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.primaryChathamsBlue.withOpacity(0.1)
+                                      ),
+                                    ),
                                     Expanded(
                                       child: BoardView(
                                         lists: _lists,
@@ -180,6 +190,24 @@ class _BoardPageState extends BaseState<BoardPage, BoardBloc> {
       ],
       items: items,
 
+    );
+  }
+
+  PreferredSizeWidget _appBarBoardView() {
+    return  AppBar(
+      title: Stack(
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            color: AppColors.primaryBlue,
+          ),
+          Text(
+            'TASKEZ',
+            style: AppThemes().lightTheme.textTheme.headlineLarge,
+          ),
+
+        ],
+      ),
     );
   }
 

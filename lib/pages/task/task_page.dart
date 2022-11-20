@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:taskez/blocs/blocs.dart';
 
 import '../../base/base_state.dart';
+import '../../resources/colors.dart';
 
 class TaskPage extends StatefulWidget {
   final TaskBloc bloc;
@@ -24,7 +25,7 @@ class _TaskPageState extends BaseState<TaskPage, TaskBloc> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true,title: Text("Bảng"),),
+      appBar: _appBarBoardView(),
       body: SingleChildScrollView(
         child: Form(
           key: _formkey,
@@ -68,6 +69,23 @@ class _TaskPageState extends BaseState<TaskPage, TaskBloc> {
       readOnly: true,
     ),
   );
+
+  PreferredSizeWidget _appBarBoardView() {
+    return  AppBar(
+      title: Stack(
+        children: <Widget>[
+          Container(
+            width: double.infinity,
+            color: AppColors.primaryBlue,
+          ),
+          Text(
+            'board',
+            style: TextStyle(fontSize: 22.0, color: AppColors.primaryBlack1),
+          ),
+        ],
+      ),
+    );
+  }
 
     @override
   // TODO: implement bloc

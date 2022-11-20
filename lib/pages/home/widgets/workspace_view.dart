@@ -3,6 +3,7 @@ import '../../../extensions/extensions.dart';
 import '../../../blocs/blocs.dart';
 import '../../../models/models.dart';
 import '../../../resources/resources.dart';
+import '../../../router/router.dart';
 import '../../../widgets/widgets.dart';
 
 class WorkspaceView extends StatefulWidget {
@@ -106,6 +107,7 @@ class _WorkspaceViewState extends State<WorkspaceView> {
                         return boardWidget(
                           snapshot.data![index].name ?? "",
                           snapshot.data![index].background ?? "",
+                          "1667549331948"
                         );
                       } else {
                         return workspaceItem(Icons.add, "New board", () {});
@@ -281,7 +283,7 @@ class _WorkspaceViewState extends State<WorkspaceView> {
     );
   }
 
-  Widget boardWidget(String name, String background) {
+  Widget boardWidget(String name, String background, String boardId) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(4)),
@@ -295,7 +297,13 @@ class _WorkspaceViewState extends State<WorkspaceView> {
       ),
       child: InkWellWrapper(
           onTap: () {
-            ///[HOANG-TODO]: Thêm sự kiển chuyển sang board page
+            Navigator.pushNamed(
+                context,
+                Routes.board,
+                arguments: {
+                  "board_id": boardId,
+                }
+            );
           },
           borderRadius: const BorderRadius.all(Radius.circular(4)),
           child: Stack(
