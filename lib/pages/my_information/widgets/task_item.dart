@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../resources/resources.dart';
 
-class ListViewItem extends StatelessWidget {
-  const ListViewItem({super.key});
+class TaskItem extends StatelessWidget {
+  const TaskItem({super.key});
 
   @override
   Widget build(BuildContext context) {

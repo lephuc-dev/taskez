@@ -10,9 +10,16 @@ class Routes {
   static String get onBoarding => '/onBoarding';
 
   static String get myInformation => '/myInformation';
+
   static String get signIn => '/signIn';
 
   static String get signUp => '/signUp';
+
+  static String get settings => '/settings';
+
+  static String get changePassword => '/changePassword';
+
+  static String get editProfiles => '/editProfiles';
 
   static getRoute(RouteSettings settings) {
     Widget widget;

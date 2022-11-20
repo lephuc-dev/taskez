@@ -11,7 +11,7 @@ class Statistic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,7 +37,7 @@ class Statistic extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .headline1
-                      ?.copyWith(color: AppColors.primaryBlack1, fontSize: 18),
+                      ?.copyWith(color: AppColors.primaryBlack1, fontSize: 16),
                 ),
               ),
             ),

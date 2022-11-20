@@ -5,12 +5,12 @@ class UserModel {
       required this.avatar,
       required this.uid});
 
-  UserModel.fromJson(Map<String, Object?> json)
+  UserModel.fromJson(Map<String, dynamic> json)
       : this(
-          email: json['email']! as String,
-          name: json['name']! as String,
-          avatar: json['avatar']! as String,
-          uid: json['avatar']! as String,
+          email: json['email']! ?? "",
+          name: json['name']! ?? "",
+          avatar: json['avatar']! ?? "",
+          uid: json['avatar']! ?? "",
         );
 
   final String email;
@@ -18,12 +18,13 @@ class UserModel {
   final String avatar;
   final String uid;
 
-  Map<String, Object?> toJson() {
-    return {
-      'email': email,
-      'name': name,
-      'avatar': avatar,
-      'uid': uid,
-    };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+
+    data['email'] = email;
+    data['name'] = name;
+    data['avatar'] = avatar;
+    data['uid'] = uid;
+    return data;
   }
 }
