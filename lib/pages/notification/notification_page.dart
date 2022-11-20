@@ -1,7 +1,10 @@
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
+import '../../models/models.dart';
 import '../../blocs/blocs.dart';
 import '../../base/base.dart';
+import '../../resources/colors.dart';
 import '../../widgets/widgets.dart';
 import '../../enums/enums.dart';
 import 'package:flutter/material.dart';
@@ -16,129 +19,60 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState
-    extends BaseState<NotificationPage, NotificationBloc> {
+    extends BaseState<NotificationPage, NotificationBloc>
+    with SingleTickerProviderStateMixin {
+  final _firebaseAuth = fbAuth.FirebaseAuth.instance;
+
+  String getCurrentUserId() {
+    return _firebaseAuth.currentUser?.uid ?? "";
+  }
+
+  late TabController _tabController;
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(vsync: this, length: 4);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          title: titleAppbar(context),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    NotifyComponent(
-                      expiredtime: '21:00, 13 thg 11',
-                      card: 'Code UI noti',
-                      type: Type.expired,
-                      time: '12 thg 11 lúc 21:00',
-                      board: 'Lập trình di động',
-                      onTap: () => {},
-                    ),
-                    NotifyComponent(
-                      user: 'Lê Hoàng Phúc',
-                      card: 'Tạo app demo push noti bằng firebase',
-                      list: "Đã xong",
-                      type: Type.move,
-                      time: '8 thg 11 lúc 22:01',
-                      board: 'Lập trình di động',
-                      avt:
-                          'https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-                      onTap: () => {},
-                    ),
-                    NotifyComponent(
-                      user: 'Lê Hoàng Phúc',
-                      card: 'Code UI noti',
-                      type: Type.add,
-                      time: '7 thg 11 lúc 22:01',
-                      board: 'Lập trình di động',
-                      avt:
-                          'https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-                      onTap: () => {},
-                    ),
-                    NotifyComponent(
-                      user: 'Lê Hoàng Phúc',
-                      card: 'Code UI noti',
-                      change: 'ngày hết hạn',
-                      type: Type.change,
-                      time: '7 thg 11 lúc 22:01',
-                      board: 'Lập trình di động',
-                      avt:
-                          'https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-                      onTap: () => {},
-                    ),
-                    NotifyComponent(
-                      expiredtime: '21:00, 13 thg 11',
-                      card: 'Code UI noti',
-                      type: Type.expired,
-                      time: '12 thg 11 lúc 21:00',
-                      board: 'Lập trình di động',
-                      onTap: () => {},
-                    ),
-                    NotifyComponent(
-                      user: 'Lê Hoàng Phúc',
-                      card: 'Tạo app demo push noti bằng firebase',
-                      list: "Đã xong",
-                      type: Type.move,
-                      time: '8 thg 11 lúc 22:01',
-                      board: 'Lập trình di động',
-                      avt:
-                          'https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-                      onTap: () => {},
-                    ),
-                    NotifyComponent(
-                      user: 'Lê Hoàng Phúc',
-                      card: 'Code UI noti',
-                      type: Type.add,
-                      time: '7 thg 11 lúc 22:01',
-                      board: 'Lập trình di động',
-                      avt:
-                          'https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-                      onTap: () => {},
-                    ),
-                    NotifyComponent(
-                      user: 'Lê Hoàng Phúc',
-                      card: 'Code UI noti',
-                      change: 'ngày hết hạn',
-                      type: Type.change,
-                      time: '7 thg 11 lúc 22:01',
-                      board: 'Lập trình di động',
-                      avt:
-                          'https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-                      onTap: () => {},
-                    ),
-                    NotifyComponent(
-                      user: 'Lê Hoàng Phúc',
-                      card: 'Code UI noti',
-                      change: 'ngày hết hạn',
-                      type: Type.change,
-                      time: '7 thg 11 lúc 22:01',
-                      board: 'Lập trình di động',
-                      avt:
-                          'https://assets.stickpng.com/images/585e4bf3cb11b227491c339a.png',
-                      onTap: () => {},
-                    ),
-                  ],
-                ),
-              ),
+    return MaterialApp(
+        home: DefaultTabController(
+      length: 4,
+      child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(
+              controller: _tabController,
+              tabs: const [
+                Tab(text: 'Tất cả', icon: FaIcon(FontAwesomeIcons.bell)),
+                // Tab(text: 'Bình luận', icon: FaIcon(FontAwesomeIcons.comments)),
+                Tab(
+                    text: 'Hết hạn',
+                    icon: FaIcon(FontAwesomeIcons.clockRotateLeft)),
+                Tab(
+                    text: 'Lời mời',
+                    icon: FaIcon(FontAwesomeIcons.envelopesBulk)),
+              ],
             ),
-          ],
-        ));
+            automaticallyImplyLeading: false,
+            elevation: 0,
+            title: titleAppbar(context),
+          ),
+          body: TabBarView(controller: _tabController, children: [
+            tabBarView(context, 1),
+            tabBarView(context, 2),
+            tabBarView(context, 3),
+          ])),
+    ));
   }
 
   Widget titleAppbar(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      const FaIcon(
-        FontAwesomeIcons.xmark,
+      GestureDetector(
+        onTap: () => Navigator.pop(context),
+        child: const FaIcon(
+          FontAwesomeIcons.xmark,
+        ),
       ),
       const Text(
         'Thông báo',
@@ -157,6 +91,220 @@ class _NotificationPageState
     ]);
   }
 
+  Widget tabBarView(BuildContext context, int index) {
+    return Column(
+      children: [
+        index == 1
+            ? StreamBuilder<List<NotificationModel>>(
+                stream: widget.bloc
+                    .getAllNotificationsByUidStream(getCurrentUserId()),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, i) {
+                            return StreamBuilder<User>(
+                                stream: bloc.getInformationUserStream(
+                                    snapshot.data?[i].notifyerId ?? ""),
+                                builder: (context, userSnapshot) {
+                                  if (userSnapshot.hasData) {
+                                    if (userSnapshot.data == null) {
+                                      return const Center(
+                                        child: Text("user in4 null"),
+                                      );
+                                    } else {
+                                      return NotifyComponent(
+                                        user: userSnapshot.data?.name ?? "",
+                                        card: snapshot.data?[i].card ?? "",
+                                        objectchange:
+                                            snapshot.data?[i].objectchange ??
+                                                "",
+                                        type: getType(
+                                            snapshot.data?[i].type ?? ""),
+                                        time: snapshot.data?[i].time ?? "",
+                                        board: snapshot.data?[i].board ?? "",
+                                        avt: userSnapshot.data?.avatar ?? "",
+                                        seen: snapshot.data?[i].seen ?? false,
+                                        onTap: () => {},
+                                      );
+                                    }
+                                  } else {
+                                    return const Center(
+                                      child: Text("No user found"),
+                                    );
+                                  }
+                                });
+                          }),
+                    );
+                  } else {
+                    return const SpinKitFadingCircle(
+                      color: AppColors.primaryWhite,
+                    );
+                  }
+                })
+            : index == 2
+                ? StreamBuilder<List<NotificationModel>>(
+                    stream: widget.bloc
+                        .getNotificationsByUidandTypeStream(getCurrentUserId(),'expired'),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Expanded(
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (context, i) {
+                                return StreamBuilder<User>(
+                                    stream: bloc.getInformationUserStream(
+                                        snapshot.data?[i].notifyerId ?? ""),
+                                    builder: (context, userSnapshot) {
+                                      if (userSnapshot.hasData) {
+                                        if (userSnapshot.data == null) {
+                                          return const Center(
+                                            child: Text("user in4 null"),
+                                          );
+                                        } else {
+                                          return NotifyComponent(
+                                            user: userSnapshot.data?.name ?? "",
+                                            card: snapshot.data?[i].card ?? "",
+                                            objectchange: snapshot
+                                                    .data?[i].objectchange ??
+                                                "",
+                                            type: getType(
+                                                snapshot.data?[i].type ?? ""),
+                                            time: snapshot.data?[i].time ?? "",
+                                            board:
+                                                snapshot.data?[i].board ?? "",
+                                            avt:
+                                                userSnapshot.data?.avatar ?? "",
+                                            seen:
+                                                snapshot.data?[i].seen ?? false,
+                                            onTap: () => {},
+                                          );
+                                        }
+                                      } else {
+                                        return const Center(
+                                          child: Text("No user found"),
+                                        );
+                                      }
+                                    });
+                              }),
+                        );
+                      } else {
+                        return const SpinKitFadingCircle(
+                          color: AppColors.primaryWhite,
+                        );
+                      }
+                    })
+                : StreamBuilder<List<InvitationModel>>(
+                    stream: widget.bloc
+                        .getAllInvitationsByUidStream(getCurrentUserId()),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Expanded(
+                          child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              physics: const BouncingScrollPhysics(),
+                              itemBuilder: (context, i) {
+                                return StreamBuilder<User>(
+                                    stream: bloc.getInformationUserStream(
+                                        snapshot.data?[i].inviterId ?? ""),
+                                    builder: (context, userSnapshot) {
+                                      if (userSnapshot.hasData) {
+                                        if (userSnapshot.data == null) {
+                                          return const Center(
+                                            child: Text("user in4 nulla"),
+                                          );
+                                        } else {
+                                          return StreamBuilder<Workspace>(
+                                              stream:
+                                                  bloc.getMyWorkspacesStream(
+                                                      snapshot.data?[i]
+                                                              .workspaceId ??
+                                                          ""),
+                                              builder:
+                                                  (context, workspaceSnapshot) {
+                                                if (workspaceSnapshot.hasData) {
+                                                  if (workspaceSnapshot.data ==
+                                                      null) {
+                                                    return const Center(
+                                                      child: Text(
+                                                          "workspace in4 nulla"),
+                                                    );
+                                                  } else {
+                                                    return NotifyComponent(
+                                                      user: userSnapshot
+                                                              .data?.name ??
+                                                          "",
+                                                      type: getType(""),
+                                                      time: snapshot
+                                                              .data?[i].time ??
+                                                          "",
+                                                      project: workspaceSnapshot
+                                                              .data?.name ??
+                                                          "",
+                                                      avt: userSnapshot
+                                                              .data?.avatar ??
+                                                          "",
+                                                      seen: getStatus(snapshot
+                                                              .data?[i]
+                                                              .status ??
+                                                          ""),
+                                                      onTap: () => {},
+                                                    );
+                                                  }
+                                                } else {
+                                                  return const Center(
+                                                    child: Text(
+                                                        "No in4 workspace"),
+                                                  );
+                                                }
+                                              });
+                                        }
+                                      } else {
+                                        return const Center(
+                                          child: Text("No user found"),
+                                        );
+                                      }
+                                    });
+                              }),
+                        );
+                      } else {
+                        return const SpinKitFadingCircle(
+                          color: AppColors.primaryWhite,
+                        );
+                      }
+                    })
+      ],
+    );
+  }
+
   @override
   NotificationBloc get bloc => widget.bloc;
+
+  getType(String type) {
+    switch (type) {
+      case 'expired':
+        return Type.expired;
+      case 'add':
+        return Type.add;
+      case 'move':
+        return Type.move;
+      case 'change':
+        return Type.change;
+      default:
+        return Type.invite;
+    }
+  }
+
+  getStatus(String status) {
+    if (status == 'pending') {
+      return false;
+    }
+    return true;
+  }
 }

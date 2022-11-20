@@ -5,4 +5,6 @@ enum Type {
   move,
   change,
   add,
+  invite,
 }
+

@@ -1,5 +1,3 @@
-import 'package:taskez/blocs/notification/notification_bloc.dart';
-
 import '../blocs/blocs.dart';
 import 'package:get_it/get_it.dart';
 
@@ -9,7 +7,7 @@ class BlocDependencies {
     injector.registerFactory<OnBoardingBloc>(() => OnBoardingBloc());
     injector.registerFactory<SignInBloc>(() => SignInBloc(injector()));
     injector.registerFactory<SignUpBloc>(() => SignUpBloc(injector()));
-    injector.registerFactory<NotificationBloc>(() => NotificationBloc());
+    injector.registerFactory<NotificationBloc>(() => NotificationBloc(injector(),injector(),injector(),injector()));
     injector.registerFactory<HomeBloc>(() => HomeBloc(injector(), injector(), injector(), injector(), injector()));
   }
 }

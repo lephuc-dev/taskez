@@ -8,5 +8,7 @@ class RepositoryDependencies {
     injector.registerFactory<BoardRepository>(() => BoardRepository());
     injector.registerFactory<UserRepository>(() => UserRepository());
     injector.registerFactory<WorkspaceParticipantRepository>(() => WorkspaceParticipantRepository());
+    injector.registerFactory<NotificationRepository>(() => NotificationRepository());
+    injector.registerFactory<InvitationRepository>(() => InvitationRepository());
   }
 }
