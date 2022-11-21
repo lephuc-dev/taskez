@@ -5,3 +5,4 @@ export 'loading_overlay.dart';
 export 'inkwell_wrapper.dart';
 export 'common_app_bar.dart';
 export 'avatar_with_name.dart';
+export 'elevated_button.dart';
