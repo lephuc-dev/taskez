@@ -6,9 +6,9 @@ import '../blocs.dart';
 class NotificationBloc extends BaseBloc<HomeState> {
   final NotificationRepository notificationRepository;
   final UserRepository userRepository;
-  final WorkspaceRepository workspaceRepository;
+  final ProjectRepository projectRepository;
 
-  NotificationBloc(this.notificationRepository, this.userRepository,this.workspaceRepository);
+  NotificationBloc(this.notificationRepository, this.userRepository,this.projectRepository);
 
   Stream<List<NotificationModel>> getAllNotificationsByUidStream(String uid) {
     return notificationRepository.getAllNotificationsByUidStream(uid);
@@ -24,8 +24,8 @@ class NotificationBloc extends BaseBloc<HomeState> {
 
 
 
-  Stream<Workspace> getMyWorkspacesStream(String uid) {
-    return workspaceRepository.getMyWorkspacesStream(uid);
+  Stream<Project> getProjectStream(String uid) {
+    return projectRepository.getProjectStream(uid);
   }
 
   @override

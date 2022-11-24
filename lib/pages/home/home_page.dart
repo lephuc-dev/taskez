@@ -63,7 +63,7 @@ class _HomePageState extends BaseState<HomePage, HomeBloc>
               child: GestureDetector(
                 onTap: () => Navigator.pushNamed(context, Routes.notification),
                 child: Badge(
-                  position: BadgePosition.topEnd(end: -8),
+                  position: BadgePosition.topEnd(top: 6,end: -8),
                   shape: BadgeShape.circle,
                   badgeColor: AppColors.primaryRed,
                   badgeContent: const Text(

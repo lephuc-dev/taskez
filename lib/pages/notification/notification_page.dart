@@ -219,8 +219,8 @@ class _NotificationPageState
                                       );
                                     } else {
                                       if (type == 'invite') {
-                                        return StreamBuilder<Workspace>(
-                                            stream: bloc.getMyWorkspacesStream(
+                                        return StreamBuilder<Project>(
+                                            stream: bloc.getProjectStream(
                                                 snapshot.data?[i].workspaceId ??
                                                     ""),
                                             builder:
