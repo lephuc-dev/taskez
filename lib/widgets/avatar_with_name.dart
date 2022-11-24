@@ -69,7 +69,7 @@ class AvatarWithName extends StatelessWidget {
       width: shapeSize,
       decoration: BoxDecoration(
         shape: boxShape ?? BoxShape.circle,
-        borderRadius: boxShape == null ? null : BorderRadius.circular(8),
+        //borderRadius: boxShape == null ? null : BorderRadius.circular(8),
         color: name == ''
             ? colorDefault
             : fixedColor(

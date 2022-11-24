@@ -6,3 +6,4 @@ export 'inkwell_wrapper.dart';
 export 'common_app_bar.dart';
 export 'notify_component.dart';
 export 'avatar_with_name.dart';
+export 'elevated_button.dart';

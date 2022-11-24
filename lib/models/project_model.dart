@@ -1,18 +1,16 @@
-class Board {
+class Project {
   String? id;
   String? name;
   String? description;
-  String? background;
-  String? workspaceId;
+  String? image;
 
-  Board({this.id, this.name, this.description, this.background, this.workspaceId});
+  Project({this.id, this.name, this.description, this.image});
 
-  Board.fromJson(Map<String, dynamic> json) {
+  Project.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];
-    background = json['background'];
-    workspaceId = json['workspace_id'];
+    image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -20,8 +18,7 @@ class Board {
     data['id'] = id;
     data['name'] = name;
     data['description'] = description;
-    data['background'] = background;
-    data['workspace_id'] = workspaceId;
+    data['image'] = image;
     return data;
   }
 }

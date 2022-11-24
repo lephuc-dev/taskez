@@ -6,28 +6,11 @@ import '../blocs.dart';
 
 class HomeBloc extends BaseBloc<HomeState> {
   final AuthenticationRepository authenticationRepository;
-  final WorkspaceRepository workspaceRepository;
-  final BoardRepository boardRepository;
   final UserRepository userRepository;
-  final WorkspaceParticipantRepository workspaceParticipantRepository;
+  final ProjectRepository projectRepository;
+  final ProjectParticipantRepository projectParticipantRepository;
 
-  HomeBloc(this.authenticationRepository, this.userRepository, this.workspaceRepository, this.boardRepository, this.workspaceParticipantRepository);
-
-  Stream<List<WorkspaceParticipant>> getWorkspacesParticipantByUidStream() {
-    return workspaceParticipantRepository.getWorkspacesParticipantByUidStream(authenticationRepository.getCurrentUserId());
-  }
-
-  Stream<List<WorkspaceParticipant>> getWorkspacesParticipantByWorkspaceIdStream(String workspaceId) {
-    return workspaceParticipantRepository.getWorkspacesParticipantByWorkspaceIdStream(workspaceId);
-  }
-
-  Stream<Workspace> getMyWorkspacesStream(String workspaceId) {
-    return workspaceRepository.getMyWorkspacesStream(workspaceId);
-  }
-
-  Stream<List<Board>> getListBoardOfWorkspaceStream(String workspaceId) {
-    return boardRepository.getListBoardOfWorkspaceStream(workspaceId);
-  }
+  HomeBloc(this.authenticationRepository, this.userRepository, this.projectRepository, this.projectParticipantRepository);
 
   Stream<User> getInformationUserStream() {
     return userRepository.getInformationUserByIdStream(authenticationRepository.getCurrentUserId());
@@ -35,6 +18,14 @@ class HomeBloc extends BaseBloc<HomeState> {
 
   Stream<User> getInformationUserByIdStream(String uid) {
     return userRepository.getInformationUserByIdStream(uid);
+  }
+
+  Stream<List<ProjectParticipant>> getListProjectByMyIdStream() {
+    return projectParticipantRepository.getListProjectParticipantByUidStream(authenticationRepository.getCurrentUserId());
+  }
+
+  Stream<Project> getProjectStream(String projectId) {
+    return projectRepository.getProjectStream(projectId);
   }
 
   @override
