@@ -38,14 +38,16 @@ class NotifyComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        border: Border(
-          left: BorderSide(
-            color: AppColors.primaryBlue1,
-            width: 4.0,
-          ),
-        ),
-      ),
+      decoration: !seen
+          ? const BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  color: AppColors.primaryBlue1,
+                  width: 4.0,
+                ),
+              ),
+            )
+          : null,
       padding: const EdgeInsets.only(top: 10),
       child: ListTile(
         onTap: onTap,
@@ -219,7 +221,7 @@ class NotifyComponent extends StatelessWidget {
                   text: user,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                const TextSpan(text: ' đã mời bạn tham gia '),
+                const TextSpan(text: ' đã mời bạn tham gia dự án '),
                 TextSpan(
                   text: project,
                   style: const TextStyle(fontWeight: FontWeight.bold),
@@ -229,5 +231,10 @@ class NotifyComponent extends StatelessWidget {
       default:
         return const Text('default');
     }
+  }
+
+  getWidth() {
+    if (seen) return 0;
+    return 4;
   }
 }

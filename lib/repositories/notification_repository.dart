@@ -9,11 +9,16 @@ class NotificationRepository {
     return _notificationFirestore.where("uid", isEqualTo: uid).snapshots().map(
         (snapshot) => snapshot.docs
             .map((document) => NotificationModel.fromJson(document.data()))
-            .toList());
+            .toList().reversed.toList());
   }
-  Stream<List<NotificationModel>> getNotificationsByUidandTypeStream(String uid,String type) {
-    return _notificationFirestore.where("uid", isEqualTo: uid).where("type", isEqualTo: type).snapshots().map(
-        (snapshot) => snapshot.docs
+
+  Stream<List<NotificationModel>> getNotificationsByUidandTypeStream(
+      String uid, String type) {
+    return _notificationFirestore
+        .where("uid", isEqualTo: uid)
+        .where("type", isEqualTo: type)
+        .snapshots()
+        .map((snapshot) => snapshot.docs
             .map((document) => NotificationModel.fromJson(document.data()))
             .toList());
   }

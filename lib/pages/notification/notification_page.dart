@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
@@ -5,6 +6,7 @@ import '../../models/models.dart';
 import '../../blocs/blocs.dart';
 import '../../base/base.dart';
 import '../../resources/colors.dart';
+import '../../resources/resources.dart';
 import '../../widgets/widgets.dart';
 import '../../enums/enums.dart';
 import 'package:flutter/material.dart';
@@ -31,37 +33,87 @@ class _NotificationPageState
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 4);
+    _tabController = TabController(vsync: this, length: 3);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(
               controller: _tabController,
-              tabs: const [
-                Tab(text: 'Tất cả', icon: FaIcon(FontAwesomeIcons.bell)),
-                // Tab(text: 'Bình luận', icon: FaIcon(FontAwesomeIcons.comments)),
+              labelColor: AppColors.primaryBlack1,
+              indicatorColor: AppColors.yellow,
+              tabs: [
                 Tab(
-                    text: 'Hết hạn',
-                    icon: FaIcon(FontAwesomeIcons.clockRotateLeft)),
+                  text: 'Tất cả',
+                  icon: Badge(
+                    position: BadgePosition.topEnd(end: -8),
+                    shape: BadgeShape.circle,
+                    badgeColor: AppColors.primaryRed,
+                    badgeContent: const Text(
+                      '2',
+                      style: TextStyle(
+                          color: AppColors.primaryWhite, fontSize: 12),
+                    ),
+                    animationType: BadgeAnimationType.slide,
+                    child: const FaIcon(
+                      FontAwesomeIcons.bell,
+                      color: AppColors.primaryBlack1,
+                    ),
+                  ),
+                ),
+                Tab(
+                  text: 'Hết hạn',
+                  icon: Badge(
+                    position: BadgePosition.topEnd(end: -8),
+                    shape: BadgeShape.circle,
+                    badgeColor: AppColors.primaryRed,
+                    showBadge: false,
+                    badgeContent: const Text(
+                      '3',
+                      style: TextStyle(
+                          color: AppColors.primaryWhite, fontSize: 12),
+                    ),
+                    animationType: BadgeAnimationType.slide,
+                    child: const FaIcon(
+                      FontAwesomeIcons.clockRotateLeft,
+                      color: AppColors.primaryBlack1,
+                    ),
+                  ),
+                ),
                 Tab(
                     text: 'Lời mời',
-                    icon: FaIcon(FontAwesomeIcons.envelopesBulk)),
+                    icon: Badge(
+                      position: BadgePosition.topEnd(end: -8),
+                      shape: BadgeShape.circle,
+                      badgeColor: AppColors.primaryRed,
+                      badgeContent: const Text(
+                        '1',
+                        style: TextStyle(
+                            color: AppColors.primaryWhite, fontSize: 12),
+                      ),
+                      animationType: BadgeAnimationType.slide,
+                      child: const FaIcon(
+                        FontAwesomeIcons.envelopesBulk,
+                        color: AppColors.primaryBlack1,
+                      ),
+                    )),
               ],
             ),
-            automaticallyImplyLeading: false,
+            automaticallyImplyLeading: true,
+            backgroundColor: AppColors.primaryWhite,
+            iconTheme: const IconThemeData(color: AppColors.primaryBlack1),
             elevation: 0,
             title: titleAppbar(context),
           ),
           body: TabBarView(controller: _tabController, children: [
-            tabBarView(context, 1),
-            tabBarView(context, 2),
-            tabBarView(context, 3),
+            tabBarView(context, 'all'),
+            tabBarView(context, 'expired'),
+            tabBarView(context, 'invite'),
           ])),
     ));
   }
@@ -74,9 +126,9 @@ class _NotificationPageState
           FontAwesomeIcons.xmark,
         ),
       ),
-      const Text(
+      Text(
         'Thông báo',
-        style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+        style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 20),
       ),
       Row(
         children: [
@@ -91,10 +143,10 @@ class _NotificationPageState
     ]);
   }
 
-  Widget tabBarView(BuildContext context, int index) {
+  Widget tabBarView(BuildContext context, String type) {
     return Column(
       children: [
-        index == 1
+        type == 'all'
             ? StreamBuilder<List<NotificationModel>>(
                 stream: widget.bloc
                     .getAllNotificationsByUidStream(getCurrentUserId()),
@@ -145,140 +197,99 @@ class _NotificationPageState
                     );
                   }
                 })
-            : index == 2
-                ? StreamBuilder<List<NotificationModel>>(
-                    stream: widget.bloc
-                        .getNotificationsByUidandTypeStream(getCurrentUserId(),'expired'),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Expanded(
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.length,
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder: (context, i) {
-                                return StreamBuilder<User>(
-                                    stream: bloc.getInformationUserStream(
-                                        snapshot.data?[i].notifyerId ?? ""),
-                                    builder: (context, userSnapshot) {
-                                      if (userSnapshot.hasData) {
-                                        if (userSnapshot.data == null) {
-                                          return const Center(
-                                            child: Text("user in4 null"),
-                                          );
-                                        } else {
-                                          return NotifyComponent(
-                                            user: userSnapshot.data?.name ?? "",
-                                            card: snapshot.data?[i].card ?? "",
-                                            objectchange: snapshot
-                                                    .data?[i].objectchange ??
-                                                "",
-                                            type: getType(
-                                                snapshot.data?[i].type ?? ""),
-                                            time: snapshot.data?[i].time ?? "",
-                                            board:
-                                                snapshot.data?[i].board ?? "",
-                                            avt:
-                                                userSnapshot.data?.avatar ?? "",
-                                            seen:
-                                                snapshot.data?[i].seen ?? false,
-                                            onTap: () => {},
-                                          );
-                                        }
-                                      } else {
-                                        return const Center(
-                                          child: Text("No user found"),
-                                        );
-                                      }
-                                    });
-                              }),
-                        );
-                      } else {
-                        return const SpinKitFadingCircle(
-                          color: AppColors.primaryWhite,
-                        );
-                      }
-                    })
-                : StreamBuilder<List<InvitationModel>>(
-                    stream: widget.bloc
-                        .getAllInvitationsByUidStream(getCurrentUserId()),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Expanded(
-                          child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.length,
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder: (context, i) {
-                                return StreamBuilder<User>(
-                                    stream: bloc.getInformationUserStream(
-                                        snapshot.data?[i].inviterId ?? ""),
-                                    builder: (context, userSnapshot) {
-                                      if (userSnapshot.hasData) {
-                                        if (userSnapshot.data == null) {
-                                          return const Center(
-                                            child: Text("user in4 nulla"),
-                                          );
-                                        } else {
-                                          return StreamBuilder<Workspace>(
-                                              stream:
-                                                  bloc.getMyWorkspacesStream(
-                                                      snapshot.data?[i]
-                                                              .workspaceId ??
-                                                          ""),
-                                              builder:
-                                                  (context, workspaceSnapshot) {
-                                                if (workspaceSnapshot.hasData) {
-                                                  if (workspaceSnapshot.data ==
-                                                      null) {
-                                                    return const Center(
-                                                      child: Text(
-                                                          "workspace in4 nulla"),
-                                                    );
-                                                  } else {
-                                                    return NotifyComponent(
-                                                      user: userSnapshot
-                                                              .data?.name ??
-                                                          "",
-                                                      type: getType(""),
-                                                      time: snapshot
-                                                              .data?[i].time ??
-                                                          "",
-                                                      project: workspaceSnapshot
-                                                              .data?.name ??
-                                                          "",
-                                                      avt: userSnapshot
-                                                              .data?.avatar ??
-                                                          "",
-                                                      seen: getStatus(snapshot
-                                                              .data?[i]
-                                                              .status ??
-                                                          ""),
-                                                      onTap: () => {},
-                                                    );
-                                                  }
-                                                } else {
+            : StreamBuilder<List<NotificationModel>>(
+                stream: widget.bloc.getNotificationsByUidandTypeStream(
+                    getCurrentUserId(), type),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Expanded(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, i) {
+                            return StreamBuilder<User>(
+                                stream: bloc.getInformationUserStream(
+                                    snapshot.data?[i].notifyerId ?? ""),
+                                builder: (context, userSnapshot) {
+                                  if (userSnapshot.hasData) {
+                                    if (userSnapshot.data == null) {
+                                      return const Center(
+                                        child: Text("user in4 nulla"),
+                                      );
+                                    } else {
+                                      if (type == 'invite') {
+                                        return StreamBuilder<Workspace>(
+                                            stream: bloc.getMyWorkspacesStream(
+                                                snapshot.data?[i].workspaceId ??
+                                                    ""),
+                                            builder:
+                                                (context, workspaceSnapshot) {
+                                              if (workspaceSnapshot.hasData) {
+                                                if (workspaceSnapshot.data ==
+                                                    null) {
                                                   return const Center(
                                                     child: Text(
-                                                        "No in4 workspace"),
+                                                        "workspace in4 nulla"),
+                                                  );
+                                                } else {
+                                                  return NotifyComponent(
+                                                    user: userSnapshot
+                                                            .data?.name ??
+                                                        "",
+                                                    type: getType(snapshot
+                                                            .data?[i].type ??
+                                                        ""),
+                                                    time: snapshot
+                                                            .data?[i].time ??
+                                                        "",
+                                                    project: workspaceSnapshot
+                                                            .data?.name ??
+                                                        "",
+                                                    avt: userSnapshot
+                                                            .data?.avatar ??
+                                                        "",
+                                                    seen: getStatus(snapshot
+                                                            .data?[i].status ??
+                                                        ""),
+                                                    onTap: () => {},
                                                   );
                                                 }
-                                              });
-                                        }
+                                              } else {
+                                                return const Center(
+                                                  child:
+                                                      Text("No in4 workspace"),
+                                                );
+                                              }
+                                            });
                                       } else {
-                                        return const Center(
-                                          child: Text("No user found"),
+                                        return NotifyComponent(
+                                          user: userSnapshot.data?.name ?? "",
+                                          type: getType(
+                                              snapshot.data?[i].type ?? ""),
+                                          card: snapshot.data?[i].card ?? "",
+                                          board: snapshot.data?[i].board ?? "",
+                                          time: snapshot.data?[i].time ?? "",
+                                          avt: userSnapshot.data?.avatar ?? "",
+                                          seen: snapshot.data?[i].seen ?? false,
+                                          onTap: () => {},
                                         );
                                       }
-                                    });
-                              }),
-                        );
-                      } else {
-                        return const SpinKitFadingCircle(
-                          color: AppColors.primaryWhite,
-                        );
-                      }
-                    })
+                                    }
+                                  } else {
+                                    return const Center(
+                                      child: Text("No user found"),
+                                    );
+                                  }
+                                });
+                          }),
+                    );
+                  } else {
+                    return const SpinKitFadingCircle(
+                      color: AppColors.primaryWhite,
+                    );
+                  }
+                })
       ],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:taskez/pages/notification/notification.dart';
 
 import '../../models/models.dart';
@@ -106,9 +107,16 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
             padding: const EdgeInsets.only(right: 16.0),
             child: GestureDetector(
               onTap: () => Navigator.pushNamed(context, Routes.notification),
-              child: const Icon(
-                Icons.notifications,
-                color: AppColors.primaryBlack1,
+              child: Badge(
+                position: BadgePosition.topEnd(end: -8),
+                shape: BadgeShape.circle,
+                badgeColor: AppColors.primaryRed,
+                badgeContent: const Text('3',style: TextStyle(color: AppColors.primaryWhite, fontSize: 12),),
+                animationType: BadgeAnimationType.slide,
+                child: const Icon(
+                  Icons.notifications,
+                  color: AppColors.primaryBlack1,
+                ),
               ),
             ),
           ),

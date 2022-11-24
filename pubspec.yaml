@@ -60,6 +60,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   font_awesome_flutter: ^10.2.1
   sticky_headers: ^0.3.0+2
+  badges: ^2.0.3
 
 
 dev_dependencies:

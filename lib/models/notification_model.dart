@@ -10,7 +10,9 @@ class NotificationModel {
   String? objectchange;
   String? type;
   String? linkTo;
+  String? workspaceId;
   bool? seen;
+  String? status;
 
   NotificationModel(
       {id,
@@ -24,7 +26,9 @@ class NotificationModel {
       objectchange,
       type,
       linkTo,
-      seen});
+      workspaceId,
+      seen,
+      status});
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -38,7 +42,9 @@ class NotificationModel {
     objectchange = json['object_change'];
     type = json['type'];
     linkTo = json['linkTo'];
+    workspaceId = json['workspace_id'];
     seen = json['seen'];
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -54,7 +60,9 @@ class NotificationModel {
     data['object_change'] = objectchange;
     data['type'] = type;
     data['linkTo'] = linkTo;
+    data['workspace_id'] = workspaceId;
     data['seen'] = seen;
+    data['status'] = status;
     return data;
   }
 }
