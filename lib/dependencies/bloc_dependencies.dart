@@ -1,3 +1,5 @@
+import 'package:taskez/blocs/task/task.dart';
+
 import '../blocs/blocs.dart';
 import 'package:get_it/get_it.dart';
 
@@ -12,5 +14,6 @@ class BlocDependencies {
         () => HomeBloc(injector(), injector(), injector(), injector()));
     injector.registerFactory<ProjectBloc>(
         () => ProjectBloc(injector(), injector(), injector()));
+    injector.registerFactory<TaskBloc>(() => TaskBloc(injector()));
   }
 }

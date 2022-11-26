@@ -18,6 +18,8 @@ class Routes {
 
   static String get project => '/project';
 
+  static String get task => '/task';
+
   static getRoute(RouteSettings settings) {
     Widget widget;
     try {
