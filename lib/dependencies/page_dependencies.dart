@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:taskez/pages/task/task.dart';
 import '../pages/pages.dart';
 import '../router/router.dart';
 
@@ -11,5 +12,6 @@ class PageDependencies {
     injector.registerFactory<Widget>(() => SignInPage(injector()), instanceName: Routes.signIn);
     injector.registerFactory<Widget>(() => SignUpPage(injector()), instanceName: Routes.signUp);
     injector.registerFactory<Widget>(() => ProjectPage(injector()), instanceName: Routes.project);
+    injector.registerFactory<Widget>(() => TaskPage(injector()), instanceName: Routes.task);
   }
 }

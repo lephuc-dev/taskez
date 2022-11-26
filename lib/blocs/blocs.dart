@@ -4,3 +4,4 @@ export 'sign_in/sign_in.dart';
 export 'home/home.dart';
 export 'sign_up/sign_up.dart';
 export 'project/project.dart';
+export 'task/task.dart';

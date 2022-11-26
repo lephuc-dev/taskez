@@ -4,6 +4,7 @@ import 'package:boardview/boardview.dart';
 import 'package:boardview/boardview_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:taskez/router/router.dart';
 import '../../models/models.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
@@ -24,6 +25,7 @@ class _ProjectPageState extends BaseState<ProjectPage, ProjectBloc> {
   List<BoardList> _lists = [];
 
   BoardViewController boardViewController = new BoardViewController();
+  TextEditingController _listNameController = TextEditingController();
 
   Color caughtcolor = Colors.red;
 
@@ -40,7 +42,7 @@ class _ProjectPageState extends BaseState<ProjectPage, ProjectBloc> {
         appBar: commonAppBar(context, title: project.name),
         body: StreamBuilder(
             stream:
-                bloc.getListListTaskByProjectidStream(project.id.toString()),
+                bloc.getListOrderbyIndexStream(project.id.toString()),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 return Container(
@@ -97,7 +99,7 @@ class _ProjectPageState extends BaseState<ProjectPage, ProjectBloc> {
                                             ),
                                             SizedBox(
                                               width: 5,
-                                            )
+                                            ),
                                           ],
                                         ),
                                         SizedBox(
@@ -157,6 +159,21 @@ class _ProjectPageState extends BaseState<ProjectPage, ProjectBloc> {
                                               buttonColor: AppColors.primaryBlue
                                                   .withOpacity(0.2),
                                             ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            AppElevatedButton(
+                                              content: "add new list",
+                                              onTap: () {
+                                                _showAddDialog(project.id.toString(), _listData.length + 1);
+                                              },
+                                              icon: Icons.list_alt_sharp,
+                                              buttonColor: AppColors.primaryBlue
+                                                  .withOpacity(0.2),
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
                                           ],
                                         )
                                       ],
@@ -185,6 +202,69 @@ class _ProjectPageState extends BaseState<ProjectPage, ProjectBloc> {
                 );
               }
             }));
+  }
+
+  Future<void> _showAddDialog(String project_id, int index) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('add new list'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Name'),
+                SizedBox(height: 5,),
+                Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.blueGrey.withOpacity(0.2),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: TextFormField(
+                    controller: _listNameController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "fill the name, please";
+                      } else {
+                        return null;
+                      }
+                    },
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "name of list"
+                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                TextButton(
+                  child: const Text('add'),
+                  onPressed: () {
+                    widget.bloc.AddNewListState(project_id, _listNameController.text, index);
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: const Text('cancel'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget buildBoardItem(Card_Object itemObject) {
@@ -225,9 +305,13 @@ class _ProjectPageState extends BaseState<ProjectPage, ProjectBloc> {
       onTapList: (int? listIndex) async {},
       onDropList: (int? listIndex, int? oldListIndex) {
         //Update our local list data
+
         var list = _listData[oldListIndex!];
         _listData.removeAt(oldListIndex!);
         _listData.insert(listIndex!, list);
+        print(_listData[oldListIndex].id.toString());
+        widget.bloc.UpdateListPositionState(_listData[listIndex].id.toString(), listIndex + 1);
+        widget.bloc.UpdateListPositionState(_listData[oldListIndex].id.toString(), oldListIndex + 1);
       },
       headerBackgroundColor: Color.fromARGB(255, 235, 236, 240),
       backgroundColor: Color.fromARGB(255, 235, 236, 240),
@@ -245,7 +329,7 @@ class _ProjectPageState extends BaseState<ProjectPage, ProjectBloc> {
                   AppElevatedButton(
                     content: "Add",
                     onTap: () {
-                      // Navigator.pushNamedAndRemoveUntil(context, Routes.task, (route) => false);
+                      Navigator.pushNamed(context, Routes.task, arguments: {"list": list});
                     },
                     icon: Icons.add,
                     buttonColor: AppColors.primaryBlue.withOpacity(0.7),

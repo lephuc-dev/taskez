@@ -21,7 +21,19 @@ class ProjectBloc extends BaseBloc<ProjectState> {
     return listRepository.getListListTaskByProjectidStream(project_id);
   }
 
+  Stream<QuerySnapshot<dynamic>> getListOrderbyIndexStream(String project_id){
+    return listRepository.getListOrderbyIndexStream(project_id);
+  }
+
+  Future<void> AddNewListState(String project_id, String name, int index){
+    return listRepository.AddNewListState(project_id, name, index);
+  }
+
   Future<void> UpdateTaskState(String id, String list_id) {
     return taskRepository.UpdateTaskState(id, list_id);
+  }
+
+  Future<void> UpdateListPositionState(String id, int index) {
+    return listRepository.UpdateListPotitionState(id, index);
   }
 }
