@@ -7,22 +7,27 @@ class NotificationBloc extends BaseBloc<HomeState> {
   final NotificationRepository notificationRepository;
   final UserRepository userRepository;
   final ProjectRepository projectRepository;
+  final AuthenticationRepository authenticationRepository;
 
-  NotificationBloc(this.notificationRepository, this.userRepository,this.projectRepository);
+  NotificationBloc(this.notificationRepository, this.userRepository,
+      this.projectRepository, this.authenticationRepository);
 
   Stream<List<NotificationModel>> getAllNotificationsByUidStream(String uid) {
     return notificationRepository.getAllNotificationsByUidStream(uid);
   }
 
-  Stream<List<NotificationModel>> getNotificationsByUidandTypeStream(String uid,String type) {
-    return notificationRepository.getNotificationsByUidandTypeStream(uid,type);
+  Stream<List<NotificationModel>> getNotificationsByUidandTypeStream(
+      String uid, String type) {
+    return notificationRepository.getNotificationsByUidandTypeStream(uid, type);
   }
 
   Stream<User> getInformationUserStream(String uid) {
     return userRepository.getInformationUserByIdStream(uid);
   }
 
-
+  String getCurrentUserId() {
+    return authenticationRepository.getCurrentUserId();
+  }
 
   Stream<Project> getProjectStream(String uid) {
     return projectRepository.getProjectStream(uid);

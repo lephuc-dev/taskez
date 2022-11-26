@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../enums/enums.dart';
-import '../resources/colors.dart';
-import '../../../widgets/widgets.dart';
+import '../../../../enums/enums.dart';
+import '../../../resources/resources.dart';
+import '../../../../../widgets/widgets.dart';
 import 'package:intl/intl.dart';
 
 class NotifyComponent extends StatelessWidget {
