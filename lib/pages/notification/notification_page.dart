@@ -1,5 +1,3 @@
-import 'package:badges/badges.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:taskez/pages/notification/widgets/title_appbar.dart';
 import '../../blocs/blocs.dart';
 import '../../base/base.dart';
@@ -36,61 +34,10 @@ class _NotificationPageState
               controller: _tabController,
               labelColor: AppColors.primaryBlack1,
               indicatorColor: AppColors.yellow,
-              tabs: [
-                Tab(
-                  text: 'Tất cả',
-                  icon: Badge(
-                    position: BadgePosition.topEnd(end: -8),
-                    shape: BadgeShape.circle,
-                    badgeColor: AppColors.primaryRed,
-                    badgeContent: const Text(
-                      '2',
-                      style: TextStyle(
-                          color: AppColors.primaryWhite, fontSize: 12),
-                    ),
-                    animationType: BadgeAnimationType.slide,
-                    child: const FaIcon(
-                      FontAwesomeIcons.bell,
-                      color: AppColors.primaryBlack1,
-                    ),
-                  ),
-                ),
-                Tab(
-                  text: 'Hết hạn',
-                  icon: Badge(
-                    position: BadgePosition.topEnd(end: -8),
-                    shape: BadgeShape.circle,
-                    badgeColor: AppColors.primaryRed,
-                    showBadge: false,
-                    badgeContent: const Text(
-                      '3',
-                      style: TextStyle(
-                          color: AppColors.primaryWhite, fontSize: 12),
-                    ),
-                    animationType: BadgeAnimationType.slide,
-                    child: const FaIcon(
-                      FontAwesomeIcons.clockRotateLeft,
-                      color: AppColors.primaryBlack1,
-                    ),
-                  ),
-                ),
-                Tab(
-                    text: 'Lời mời',
-                    icon: Badge(
-                      position: BadgePosition.topEnd(end: -8),
-                      shape: BadgeShape.circle,
-                      badgeColor: AppColors.primaryRed,
-                      badgeContent: const Text(
-                        '1',
-                        style: TextStyle(
-                            color: AppColors.primaryWhite, fontSize: 12),
-                      ),
-                      animationType: BadgeAnimationType.slide,
-                      child: const FaIcon(
-                        FontAwesomeIcons.envelopesBulk,
-                        color: AppColors.primaryBlack1,
-                      ),
-                    )),
+              tabs: const [
+                Tab(text: 'Tất cả'),
+                Tab(text: 'Hết hạn'),
+                Tab(text: 'Lời mời')
               ],
             ),
             automaticallyImplyLeading: true,
