@@ -1,5 +1,5 @@
-import 'package:taskez/blocs/change_password/change_password.dart';
-import 'package:taskez/blocs/edit_profiles/edit_prodfiles.dart';
+
+import 'package:taskez/blocs/task/task.dart';
 
 import '../blocs/blocs.dart';
 import 'package:get_it/get_it.dart';
@@ -14,7 +14,12 @@ class BlocDependencies {
     injector.registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector(), injector()));
     injector.registerFactory<EditProfilesBloc>(() => EditProfilesBloc(injector(), injector()));
     injector.registerFactory<HomeBloc>(() => HomeBloc(injector(), injector(), injector(), injector()));
-    injector.registerFactory<ProjectBloc>(() => ProjectBloc(injector()));
     injector.registerFactory<ChangeAvatarBloc>(() => ChangeAvatarBloc(injector(), injector()));
+    injector.registerFactory<NotificationBloc>(() => NotificationBloc(injector(),injector(),injector(),injector(),));
+    injector.registerFactory<HomeBloc>(
+        () => HomeBloc(injector(), injector(), injector(), injector()));
+    injector.registerFactory<ProjectBloc>(
+        () => ProjectBloc(injector(), injector(), injector()));
+    injector.registerFactory<TaskBloc>(() => TaskBloc(injector()));
   }
 }

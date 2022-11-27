@@ -8,3 +8,5 @@ export 'change_password/change_password.dart';
 export 'edit_profiles/edit_profiles.dart';
 export 'project/project.dart';
 export 'change_avatar/change_avatar.dart';
+export 'notification/notification.dart';
+export 'task/task.dart';

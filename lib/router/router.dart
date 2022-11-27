@@ -25,6 +25,10 @@ class Routes {
 
   static String get changeAvatar => '/changeAvatar';
 
+  static String get notification => '/notification';
+
+  static String get task => '/task';
+
   static getRoute(RouteSettings settings) {
     Widget widget;
     try {

@@ -1,7 +1,9 @@
+import 'package:badges/badges.dart';
+import 'package:flutter/material.dart';
 import '../../resources/resources.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
-import 'package:flutter/material.dart';
+import '../../router/router.dart';
 import 'widgets/slider_menu_view.dart';
 import 'widgets/projects_tab.dart';
 
@@ -14,7 +16,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends BaseState<HomePage, HomeBloc> with TickerProviderStateMixin {
+class _HomePageState extends BaseState<HomePage, HomeBloc>
+    with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -38,14 +41,17 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> with TickerProviderSt
         appBar: AppBar(
           title: Text(
             "Taskez",
-            style: Theme.of(context).textTheme.headline5?.copyWith(color: AppColors.primaryBlack1, fontSize: 20),
+            style: Theme.of(context)
+                .textTheme
+                .headline5
+                ?.copyWith(color: AppColors.primaryBlack1, fontSize: 20),
           ),
           centerTitle: false,
           backgroundColor: AppColors.primaryWhite,
           elevation: 0.5,
           iconTheme: const IconThemeData(color: AppColors.primaryBlack1),
-          actions: const [
-            Padding(
+          actions: [
+            const Padding(
               padding: EdgeInsets.only(right: 16.0),
               child: Icon(
                 Icons.search,
@@ -53,10 +59,24 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> with TickerProviderSt
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 16.0),
-              child: Icon(
-                Icons.notifications,
-                color: AppColors.primaryBlack1,
+              padding: const EdgeInsets.only(right: 16.0),
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(context, Routes.notification),
+                child: Badge(
+                  position: BadgePosition.topEnd(top: 6,end: -8),
+                  shape: BadgeShape.circle,
+                  badgeColor: AppColors.primaryRed,
+                  badgeContent: const Text(
+                    '3',
+                    style:
+                        TextStyle(color: AppColors.primaryWhite, fontSize: 12),
+                  ),
+                  animationType: BadgeAnimationType.slide,
+                  child: const Icon(
+                    Icons.notifications,
+                    color: AppColors.primaryBlack1,
+                  ),
+                ),
               ),
             ),
           ],
