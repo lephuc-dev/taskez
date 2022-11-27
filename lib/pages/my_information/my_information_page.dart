@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:taskez/models/models.dart';
 import 'package:taskez/router/router.dart';
 import '../../widgets/widgets.dart';
 import '../../resources/resources.dart';
@@ -25,9 +25,16 @@ class _MyInformationPageState
     super.initState();
   }
 
-  void onSettingsClick() {
-    Navigator.pushNamed(
-        context, Routes.settings);
+  void onChangePasswordClick() {
+    Navigator.pushNamed(context, Routes.changePassword);
+  }
+
+  void onEditProfilesClick() {
+    Navigator.pushNamed(context, Routes.editProfiles);
+  }
+
+  void onChangeAvatarClick() {
+    Navigator.pushNamed(context, Routes.changeAvatar);
   }
 
   @override
@@ -37,10 +44,9 @@ class _MyInformationPageState
       child: Scaffold(
           appBar: commonAppBar(context, title: 'Profiles', centerTitle: true),
           backgroundColor: AppColors.backgroundWhite,
-          body: StreamBuilder<QuerySnapshot>(
-            stream: widget.bloc.getUserStream(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          body: StreamBuilder<User>(
+            stream: widget.bloc.getInformationUserStream(),
+            builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('Something went wrong');
               }
@@ -69,33 +75,103 @@ class _MyInformationPageState
                                         CrossAxisAlignment.center,
                                     children: [
                                       IconButton(
-                                          onPressed: () => onSettingsClick(),
-                                          icon: const Icon(Icons.settings))
+                                          onPressed: () {
+                                            showModalBottomSheet(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return Column(
+                                                    crossAxisAlignment:CrossAxisAlignment.center,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 24,
+                                                                right: 24,
+                                                                top: 64),
+                                                        child: Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: CommonButton(
+                                                              buttonColor: AppColors.primaryBlue,
+                                                              content:'Edit Profiles',
+                                                              onTap: (() => onEditProfilesClick()),
+                                                            )),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                                left: 24,
+                                                                right: 24,
+                                                                top: 8,
+                                                                bottom: 8),
+                                                        child: Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: CommonButton(
+                                                              buttonColor: AppColors.primaryBlue,
+                                                              content: 'Change Password',
+                                                              onTap: () => onChangePasswordClick(),
+                                                            )),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                                left: 24,
+                                                                right: 24,
+                                                                top: 8,
+                                                                bottom: 8),
+                                                        child: Padding(
+                                                            padding: const EdgeInsets.all(8.0),
+                                                            child: CommonButton(
+                                                              buttonColor: AppColors.primaryBlue,
+                                                              content: 'Change Avatar',
+                                                              onTap: () => onChangeAvatarClick(),
+                                                            )),
+                                                      )
+                                                    ],
+                                                  );
+                                                });
+                                          },
+                                          icon: const Icon(Icons.settings)),
                                     ]),
                                 ListTile(
-                                  leading: CircleAvatar(
-                                    radius: 32,
-                                    backgroundImage: NetworkImage(
-                                        snapshot.data!.docs[0]["avatar"]),
-                                    child: Text(snapshot.data!.docs[0]["name"].toString().characters.first),
+                                  leading: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      if (snapshot.data?.avatar == "")
+                                        AvatarWithName(
+                                          name: snapshot.data?.name ?? "?",
+                                          fontSize: 20,
+                                          shapeSize: 56,
+                                          count: 2,
+                                        )
+                                      else
+                                        CircleAvatar(
+                                          radius: 28,
+                                          backgroundColor: AppColors.yellow,
+                                          child: CircleAvatar(
+                                            radius: 28,
+                                            backgroundImage: NetworkImage(
+                                                snapshot.data?.avatar ?? ""),
+                                          ),
+                                        ),
+                                    ],
                                   ),
-                                  title: Text(snapshot.data!.docs[0]["name"],
+                                  title: Text(snapshot.data!.name ?? "",
                                       style: Theme.of(context)
-                                                .textTheme
-                                                .headline1
-                                                ?.copyWith(
-                                                    color:
-                                                        AppColors.primaryBlack1,
-                                                    fontSize: 22)),
+                                          .textTheme
+                                          .headline1
+                                          ?.copyWith(
+                                              color: AppColors.primaryBlack1,
+                                              fontSize: 20)),
                                   subtitle: Text(
-                                    snapshot.data!.docs[0]["email"],
+                                    snapshot.data!.email ?? "",
                                     style: Theme.of(context)
-                                                .textTheme
-                                                .subtitle1
-                                                ?.copyWith(
-                                                    color:
-                                                        AppColors.primaryGrey,
-                                                    fontSize: 18),
+                                        .textTheme
+                                        .subtitle1
+                                        ?.copyWith(
+                                            color: AppColors.primaryGrey,
+                                            fontSize: 18),
                                   ),
                                 ),
                                 Row(
@@ -116,7 +192,7 @@ class _MyInformationPageState
                                                 ?.copyWith(
                                                     color:
                                                         AppColors.primaryBlack1,
-                                                    fontSize: 22)),
+                                                    fontSize: 20)),
                                         Text(
                                           'Create Tasks',
                                           style: Theme.of(context)
@@ -140,7 +216,7 @@ class _MyInformationPageState
                                                 ?.copyWith(
                                                     color:
                                                         AppColors.primaryBlack1,
-                                                    fontSize: 22)),
+                                                    fontSize: 20)),
                                         Text(
                                           'Completed Tasks',
                                           style: Theme.of(context)

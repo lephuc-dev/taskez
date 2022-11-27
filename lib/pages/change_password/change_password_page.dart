@@ -3,6 +3,7 @@ import 'package:taskez/base/base.dart';
 import 'package:taskez/blocs/change_password/change_password.dart';
 import 'package:taskez/enums/enums.dart';
 import 'package:taskez/resources/resources.dart';
+import 'package:taskez/router/router.dart';
 import 'package:taskez/widgets/widgets.dart';
 
 class ChangePasswordPage extends StatefulWidget {
@@ -22,7 +23,6 @@ class _ChangePasswordState
   }
 
   final formKey = GlobalKey<FormState>();
-  bool check = false;
   TextEditingController passwordTextController = TextEditingController();
   TextEditingController newPasswordTextController = TextEditingController();
   TextEditingController rePasswordTextController = TextEditingController();
@@ -33,24 +33,30 @@ class _ChangePasswordState
       String newPassword = newPasswordTextController.text.toString().trim();
       String confirmPassword = rePasswordTextController.text.toString().trim();
 
-      bloc.onCheckPassword(
-          password, () => onCheckSucces(), (error) => onCheckFail(error));
+      bloc
+          .getInformationUserStream()
+          .map((event) => bloc.onSetEmail(event.email ?? ""));
 
-      if (!check) {
-        return;
-      }
+      bloc.onSetChangePasswordState(true);
 
       if (newPassword != confirmPassword) {
         onPasswordNotConfirmed();
         return;
       }
 
-      bloc.onUpdatePassword(newPassword, () => onUpdateSuccess(),
-          (error) => onUpdateError(error));
+      ///Todo: kiểm tra mật khẩu
+      bloc.onSignIn(
+        bloc.email.toString(), 
+        password, 
+        () {
+          bloc.onUpdatePassword(newPassword, () => onUpdateSuccess(), (error) => onUpdateError(error));
+        }, 
+        (msg) => onCheckPasswordFail(msg));
     }
   }
 
   void onPasswordNotConfirmed() {
+    bloc.onSetChangePasswordState(false);
     showDialog(
       context: context,
       builder: (context) {
@@ -65,6 +71,7 @@ class _ChangePasswordState
   }
 
   void onUpdateSuccess() {
+    bloc.onSetChangePasswordState(false);
     showDialog(
       context: context,
       builder: (context) {
@@ -74,7 +81,7 @@ class _ChangePasswordState
           contentButton: "Close",
           onTap: () => {
             Navigator.pop(context),
-            Navigator.pop(context),
+                  Navigator.pop(context),
           },
         );
       },
@@ -82,34 +89,35 @@ class _ChangePasswordState
   }
 
   void onUpdateError(String error) {
+    bloc.onSetChangePasswordState(false);
     showDialog(
       context: context,
       builder: (context) {
         return CommonDialog(
-          title: "Update Password Failed",
-          description: error,
-          contentButton: "Close",
-          onTap: () => Navigator.pop(context),
-        );
+            title: "Update Password Failed",
+            description: error,
+            contentButton: "Close",
+            onTap: () => {
+                  Navigator.pop(context),
+                  Navigator.pop(context),
+                });
       },
     );
   }
 
-  onCheckSucces() {
-    check = true;
-  }
-
-  onCheckFail(String error) {
-    check = false;
+  void onCheckPasswordFail(String error) {
+    bloc.onSetChangePasswordState(false);
     showDialog(
       context: context,
       builder: (context) {
         return CommonDialog(
-          title: "Password Not True",
-          description: error,
-          contentButton: "Close",
-          onTap: () => Navigator.pop(context),
-        );
+            title: "Password not true",
+            description: error,
+            contentButton: "Close",
+            onTap: () => {
+                  Navigator.pop(context),
+                  Navigator.pop(context),
+                });
       },
     );
   }
@@ -118,78 +126,103 @@ class _ChangePasswordState
   Widget build(BuildContext context) {
     return Form(
         key: formKey,
-        child: Scaffold(
-          appBar:
-              commonAppBar(context, title: 'Edit Profiles', centerTitle: true),
-          backgroundColor: AppColors.primaryWhite,
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 32.0),
-                  child: Text(
-                    "Password",
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        ?.copyWith(fontSize: 20),
+        child: StreamBuilder<bool?>(
+            stream: bloc.isCheckingChangePassword,
+            builder: (context, snapshot) {
+              return LoadingOverLayWidget(
+                isLoading: snapshot.data ?? false,
+                child: Scaffold(
+                  appBar: commonAppBar(context),
+                  backgroundColor: AppColors.primaryWhite,
+                  body: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Change Password",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline5
+                                ?.copyWith(fontSize: 32),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              "Change your password",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  ?.copyWith(color: AppColors.primaryGray1),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 32.0),
+                            child: Text(
+                              "Password",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  ?.copyWith(fontSize: 20),
+                            ),
+                          ),
+                          CommonTextField(
+                            textEditingController: passwordTextController,
+                            hintText: "Enter your password",
+                            textInputType: TextInputType.text,
+                            validatorStyle: ValidatorStyle.password,
+                            isPasswordTextField: true,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 32.0),
+                            child: Text(
+                              "New Password",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  ?.copyWith(fontSize: 20),
+                            ),
+                          ),
+                          CommonTextField(
+                            textEditingController: newPasswordTextController,
+                            hintText: "Enter your new password",
+                            textInputType: TextInputType.text,
+                            validatorStyle: ValidatorStyle.password,
+                            isPasswordTextField: true,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 32.0),
+                            child: Text(
+                              "Cofirm new password",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  ?.copyWith(fontSize: 20),
+                            ),
+                          ),
+                          CommonTextField(
+                            textEditingController: rePasswordTextController,
+                            hintText: "Re enter your password",
+                            textInputType: TextInputType.text,
+                            validatorStyle: ValidatorStyle.password,
+                            isPasswordTextField: true,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 64.0),
+                            child: CommonButton(
+                              content: 'Save',
+                              onTap: () => onUpdatePasswordClick(),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                CommonTextField(
-                  textEditingController: passwordTextController,
-                  hintText: "Enter your password",
-                  textInputType: TextInputType.text,
-                  validatorStyle: ValidatorStyle.password,
-                  isPasswordTextField: true,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 32.0),
-                  child: Text(
-                    "New Password",
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        ?.copyWith(fontSize: 20),
-                  ),
-                ),
-                CommonTextField(
-                  textEditingController: newPasswordTextController,
-                  hintText: "Cofirm new password",
-                  textInputType: TextInputType.text,
-                  validatorStyle: ValidatorStyle.password,
-                  isPasswordTextField: true,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 32.0),
-                  child: Text(
-                    "Re Enter Password",
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        ?.copyWith(fontSize: 20),
-                  ),
-                ),
-                CommonTextField(
-                  textEditingController: rePasswordTextController,
-                  hintText: "Re enter your password",
-                  textInputType: TextInputType.text,
-                  validatorStyle: ValidatorStyle.password,
-                  isPasswordTextField: true,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 64.0),
-                  child: CommonButton(
-                    content: 'Save',
-                    onTap: () => onUpdatePasswordClick(),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
+              );
+            }));
   }
 
   @override

@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:taskez/base/base.dart';
 import 'package:taskez/blocs/edit_profiles/edit_prodfiles.dart';
 import 'package:taskez/enums/enums.dart';
 import 'package:taskez/resources/colors.dart';
-import 'package:taskez/router/router.dart';
 import 'package:taskez/widgets/widgets.dart';
 
 class EditProfilesPage extends StatefulWidget {
@@ -20,10 +18,8 @@ class _EditProfilesState extends BaseState<EditProfilesPage, EditProfilesBloc> {
   @override
   void initState() {
     super.initState();
-    final doc = bloc.profilesRepository.getUser();
-    doc.then((DocumentSnapshot document) {
-      Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-      nameTextController.text = data["name"];
+    bloc.getInformationUserStream().first.then((value) {
+      nameTextController.text = value.name ?? "";
     });
   }
 
@@ -33,17 +29,20 @@ class _EditProfilesState extends BaseState<EditProfilesPage, EditProfilesBloc> {
   void onUpdateUserClick() {
     if (formKey.currentState?.validate() == true) {
       String name = nameTextController.text.toString().trim();
-      bloc.profilesRepository.updateUser(
+
+      bloc.onSetEditProfilesState(true);
+      bloc.onUpdateUser(
           name, () => onUpdateSuccess(), (error) => onUpdateError(error));
     }
   }
 
   void onUpdateSuccess() {
+    bloc.onSetEditProfilesState(false);
     showDialog(
       context: context,
       builder: (context) {
         return CommonDialog(
-          title: "Update User Failed",
+          title: "Update User Success",
           description: "Success!",
           contentButton: "Close",
           onTap: () => {
@@ -56,6 +55,7 @@ class _EditProfilesState extends BaseState<EditProfilesPage, EditProfilesBloc> {
   }
 
   void onUpdateError(String error) {
+    bloc.onSetEditProfilesState(false);
     showDialog(
       context: context,
       builder: (context) {
@@ -73,42 +73,61 @@ class _EditProfilesState extends BaseState<EditProfilesPage, EditProfilesBloc> {
   Widget build(BuildContext context) {
     return Form(
         key: formKey,
-        child: Scaffold(
-          appBar:
-              commonAppBar(context, title: 'Edit Profiles', centerTitle: true),
-          backgroundColor: AppColors.primaryWhite,
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 32.0),
-                  child: Text(
-                    "Change your name",
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        ?.copyWith(fontSize: 20),
+        child: StreamBuilder<bool?>(
+            stream: bloc.isCheckingEditStream,
+            builder: (context, snapshot) {
+              return LoadingOverLayWidget(
+                isLoading: snapshot.data ?? false,
+                child: Scaffold(
+                  appBar: commonAppBar(context),
+                  backgroundColor: AppColors.primaryWhite,
+                  body: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                              "Edit profiles",
+                              style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 32),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                "Update your informations",
+                                style: Theme.of(context).textTheme.subtitle2?.copyWith(color: AppColors.primaryGray1),
+                              ),
+                            ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 32.0),
+                            child: Text(
+                              "Change your name",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  ?.copyWith(fontSize: 20),
+                            ),
+                          ),
+                          CommonTextField(
+                              textEditingController: nameTextController,
+                              hintText: "Enter your new name",
+                              textInputType: TextInputType.text,
+                              validatorStyle: ValidatorStyle.text),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 64.0),
+                            child: CommonButton(
+                              content: 'Save',
+                              onTap: () => onUpdateUserClick(),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                CommonTextField(
-                    textEditingController: nameTextController,
-                    hintText: "Enter your new name",
-                    textInputType: TextInputType.text,
-                    validatorStyle: ValidatorStyle.text),
-                Padding(
-                  padding: EdgeInsets.only(top: 64.0),
-                  child: CommonButton(
-                    content: 'Save',
-                    onTap: () => onUpdateUserClick(),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
+              );
+            }));
   }
 
   @override

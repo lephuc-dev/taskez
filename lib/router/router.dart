@@ -15,15 +15,15 @@ class Routes {
 
   static String get signUp => '/signUp';
 
-  static String get settings => '/settings';
-
   static String get changePassword => '/changePassword';
 
   static String get editProfiles => '/editProfiles';
-  
+
   static String get workspaceInformation => '/workspaceInformation';
 
   static String get project => '/project';
+
+  static String get changeAvatar => '/changeAvatar';
 
   static getRoute(RouteSettings settings) {
     Widget widget;

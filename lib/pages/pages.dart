@@ -4,7 +4,7 @@ export 'on_boarding/on_boarding.dart';
 export 'my_information/my_information.dart';
 export 'sign_in/sign_in.dart';
 export 'sign_up/sign_up.dart';
-export 'settings/settings.dart';
 export 'change_password/change_password.dart';
 export 'edit_profiles/edit_profiles.dart';
 export 'project/project.dart';
+export 'change_avatar/change_avatar.dart';

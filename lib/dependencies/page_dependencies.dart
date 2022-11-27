@@ -11,9 +11,9 @@ class PageDependencies {
     injector.registerFactory<Widget>(() => SignInPage(injector()), instanceName: Routes.signIn);
     injector.registerFactory<Widget>(() => SignUpPage(injector()), instanceName: Routes.signUp);
     injector.registerFactory<Widget>(() => MyInformationPage(injector()), instanceName: Routes.myInformation);
-    injector.registerFactory<Widget>(() => SettingsPage(injector()), instanceName: Routes.settings);
     injector.registerFactory<Widget>(() => ChangePasswordPage(injector()), instanceName: Routes.changePassword);
     injector.registerFactory<Widget>(() => EditProfilesPage(injector()), instanceName: Routes.editProfiles);
     injector.registerFactory<Widget>(() => ProjectPage(injector()), instanceName: Routes.project);
+    injector.registerFactory<Widget>(() => ChangeAvatarPage(injector()), instanceName: Routes.changeAvatar);
   }
 }
