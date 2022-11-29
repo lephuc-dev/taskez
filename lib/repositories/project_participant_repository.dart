@@ -10,4 +10,11 @@ class ProjectParticipantRepository {
         .snapshots()
         .map((snapshot) => snapshot.docs.map((document) => ProjectParticipant.fromJson(document.data())).toList());
   }
+
+  Stream<List<ProjectParticipant>> getListProjectParticipantByProjectIdStream(String project_id) {
+    return _projectParticipantFirestore
+        .where("project_id", isEqualTo: project_id)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((document) => ProjectParticipant.fromJson(document.data())).toList());
+  }
 }

@@ -148,7 +148,7 @@ class _TaskPageState extends BaseState<TaskPage, TaskBloc> {
 
   void _AddNewTask(List_Object list){
     if(_formkey.currentState!.validate()){
-      widget.bloc.AddNewTaskState(list, _titleController.text, _decriptionController.text)..then((value) => {
+      widget.bloc.AddNewTaskState(list, _titleController.text, _decriptionController.text, _selectRange!)..then((value) => {
         Navigator.pop(context),
       });;
     }

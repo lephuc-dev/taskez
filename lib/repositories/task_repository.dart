@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:taskez/models/list_model.dart';
 
 class TaskRepository {
@@ -11,7 +12,7 @@ class TaskRepository {
         .snapshots();
   }
 
-  Future<void> AddNewTaskState(List_Object list, String title, String decription) {
+  Future<void> AddNewTaskState(List_Object list, String title, String decription, DateTimeRange time) {
     String id = (new DateTime.now().microsecondsSinceEpoch).toString();
     return _fireStoreTasks
         .doc(id)
@@ -21,8 +22,8 @@ class TaskRepository {
       "project_id" : list.projecId,
       "title" : title,
       "decription" : decription,
-      "start_date" : id,
-      "end_date" : id,
+      "start_date" : time.start.microsecondsSinceEpoch.toString(),
+      "end_date" : time.end.microsecondsSinceEpoch.toString(),
     })
         .then((value) => print("completed add task"))
         .catchError((error) => print("fail"));

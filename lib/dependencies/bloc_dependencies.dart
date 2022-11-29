@@ -12,7 +12,7 @@ class BlocDependencies {
     injector.registerFactory<HomeBloc>(
         () => HomeBloc(injector(), injector(), injector(), injector()));
     injector.registerFactory<ProjectBloc>(
-        () => ProjectBloc(injector(), injector(), injector()));
+        () => ProjectBloc(injector(), injector(), injector(), injector()));
     injector.registerFactory<TaskBloc>(() => TaskBloc(injector()));
   }
 }

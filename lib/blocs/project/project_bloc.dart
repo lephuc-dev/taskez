@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../base/base.dart';
+import '../../models/models.dart';
 import '../blocs.dart';
 import '../../repositories/repositories.dart';
 
@@ -8,8 +9,9 @@ class ProjectBloc extends BaseBloc<ProjectState> {
   final ProjectRepository projectRepository;
   final ListRepository listRepository;
   final TaskRepository taskRepository;
+  final ProjectParticipantRepository participantRepository;
 
-  ProjectBloc(this.projectRepository, this.listRepository, this.taskRepository);
+  ProjectBloc(this.projectRepository, this.listRepository, this.taskRepository, this.participantRepository);
 
   Stream<QuerySnapshot<dynamic>> getListTaskCardByProjectidStream(
       String project_id) {
@@ -23,6 +25,10 @@ class ProjectBloc extends BaseBloc<ProjectState> {
 
   Stream<QuerySnapshot<dynamic>> getListOrderbyIndexStream(String project_id){
     return listRepository.getListOrderbyIndexStream(project_id);
+  }
+
+  Stream<List<ProjectParticipant>> getListProjectParticipantByProjectIdStream(String project_id){
+    return participantRepository.getListProjectParticipantByProjectIdStream(project_id);
   }
 
   Future<void> AddNewListState(String project_id, String name, int index){

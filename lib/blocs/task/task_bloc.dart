@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:taskez/blocs/task/task.dart';
 import 'package:taskez/models/models.dart';
 
@@ -9,8 +10,8 @@ class TaskBloc extends BaseBloc<TaskState> {
 
   TaskBloc(this.taskRepository);
 
-  Future<void> AddNewTaskState(List_Object list, String title, String decription){
-    return taskRepository.AddNewTaskState(list, title, decription);
+  Future<void> AddNewTaskState(List_Object list, String title, String decription, DateTimeRange time){
+    return taskRepository.AddNewTaskState(list, title, decription, time);
   }
 
   @override
