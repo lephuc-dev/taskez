@@ -11,6 +11,11 @@ class PageDependencies {
     injector.registerFactory<Widget>(() => OnBoardingPage(injector()), instanceName: Routes.onBoarding);
     injector.registerFactory<Widget>(() => SignInPage(injector()), instanceName: Routes.signIn);
     injector.registerFactory<Widget>(() => SignUpPage(injector()), instanceName: Routes.signUp);
+    injector.registerFactory<Widget>(() => MyInformationPage(injector()), instanceName: Routes.myInformation);
+    injector.registerFactory<Widget>(() => ChangePasswordPage(injector()), instanceName: Routes.changePassword);
+    injector.registerFactory<Widget>(() => EditProfilesPage(injector()), instanceName: Routes.editProfiles);
+    injector.registerFactory<Widget>(() => ChangeAvatarPage(injector()), instanceName: Routes.changeAvatar);
+    injector.registerFactory<Widget>(() => NotificationPage(injector()), instanceName: Routes.notification);
     injector.registerFactory<Widget>(() => ProjectPage(injector()), instanceName: Routes.project);
     injector.registerFactory<Widget>(() => TaskPage(injector()), instanceName: Routes.task);
   }

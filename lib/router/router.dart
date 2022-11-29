@@ -9,13 +9,23 @@ class Routes {
 
   static String get onBoarding => '/onBoarding';
 
+  static String get myInformation => '/myInformation';
+
   static String get signIn => '/signIn';
 
   static String get signUp => '/signUp';
 
+  static String get changePassword => '/changePassword';
+
+  static String get editProfiles => '/editProfiles';
+
   static String get workspaceInformation => '/workspaceInformation';
 
   static String get project => '/project';
+
+  static String get changeAvatar => '/changeAvatar';
+
+  static String get notification => '/notification';
 
   static String get task => '/task';
 
@@ -30,8 +40,7 @@ class Routes {
           child: Builder(
             builder: (context) {
               return const Padding(
-                padding:
-                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
+                padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 32.0),
                 child: Text(
                   '404 NOT FOUND',
                   textAlign: TextAlign.center,

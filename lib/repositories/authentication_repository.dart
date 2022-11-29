@@ -9,9 +9,12 @@ class AuthenticationRepository {
     return _firebaseAuth.currentUser?.uid ?? "";
   }
 
-  Future<void> signIn(String email, String password, Function onSignInSuccess, Function(String) onSignInError) async {
+  Future<void> signIn(String email, String password, Function onSignInSuccess,
+      Function(String) onSignInError) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password).then((value) => onSignInSuccess());
+      await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) => onSignInSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         onSignInError("User account not found");
@@ -22,7 +25,8 @@ class AuthenticationRepository {
     }
   }
 
-  Future<void> signUp(String name, String email, String password, Function onSignUpSuccess, Function(String) onSignUpError) async {
+  Future<void> signUp(String name, String email, String password,
+      Function onSignUpSuccess, Function(String) onSignUpError) async {
     try {
       await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password)
@@ -40,6 +44,17 @@ class AuthenticationRepository {
       if (e.code == 'email-already-in-use') {
         onSignUpError("Account already exists");
       }
+    }
+  }
+
+  Future<void> updatePassword(String newPassword, Function onUpdateSuccess,
+      Function(String) onUpdateError) async {
+    try {
+      await _firebaseAuth.currentUser!
+          .updatePassword(newPassword)
+          .then((value) => onUpdateSuccess());
+    } catch (e) {
+      onUpdateError(e.toString());
     }
   }
 }

@@ -6,6 +6,8 @@ class RepositoryDependencies {
     injector.registerFactory<AuthenticationRepository>(
         () => AuthenticationRepository());
     injector.registerFactory<UserRepository>(() => UserRepository());
+ 
+    injector.registerFactory<NotificationRepository>(() => NotificationRepository());
     injector.registerFactory<ProjectRepository>(() => ProjectRepository());
     injector.registerFactory<ProjectParticipantRepository>(
         () => ProjectParticipantRepository());
