@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:taskez/pages/my_information/my_information.dart';
 import '../home/home.dart';
 import '../notification/notification.dart';
 import '../../repositories/repositories.dart';
@@ -37,6 +38,11 @@ class _BottomBarPageState extends State<BottomBarPage> {
     AuthenticationRepository(),
   );
 
+  MyInformationBloc myInformationBloc = MyInformationBloc(
+    AuthenticationRepository(),
+    UserRepository(),
+  );
+
   @override
   void initState() {
     super.initState();
@@ -44,7 +50,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
       HomePage(homeBloc),
       const Scaffold(),
       NotificationPage(notificationBloc),
-      const Scaffold(),
+      MyInformationPage(myInformationBloc),
     ];
   }
 

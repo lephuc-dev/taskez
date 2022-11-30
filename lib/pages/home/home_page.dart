@@ -31,12 +31,9 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
         backgroundColor: AppColors.primaryWhite,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              "Taskez",
-              style: Theme.of(context).textTheme.headline5?.copyWith(color: AppColors.primaryBlack1, fontSize: 20),
-            ),
+          title: Text(
+            "Taskez",
+            style: Theme.of(context).textTheme.headline5?.copyWith(color: AppColors.primaryBlack1, fontSize: 20),
           ),
           centerTitle: false,
           backgroundColor: AppColors.primaryWhite,

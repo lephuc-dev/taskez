@@ -23,4 +23,5 @@ class VectorImageAssets {
   static const String icon_notification = '$_pathPrefix/icon_notification.svg';
   static const String icon_setting = '$_pathPrefix/icon_setting.svg';
   static const String icon_task = '$_pathPrefix/icon_task.svg';
+  static const String img_covid_banner = '$_pathPrefix/img_covid_banner.svg';
 }
