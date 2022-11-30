@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../blocs/blocs.dart';
 import '../../../models/models.dart';
 import '../../../resources/resources.dart';
+import '../../../router/router.dart';
 import '../../../widgets/widgets.dart';
 import 'slider_menu_item.dart';
 
@@ -26,9 +27,7 @@ class _SliderMenuViewState extends State<SliderMenuView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWellWrapper(
-              onTap: () {
-                ///TODO: Thêm sự kiện chuyển sang màn hình profile
-              },
+              onTap: () => Navigator.pushNamed(context, Routes.myInformation),
               splashColor: AppColors.splashInkWell.withOpacity(0.2),
               hoverColor: AppColors.splashInkWell.withOpacity(0.2),
               highlightColor: AppColors.splashInkWell.withOpacity(0.2),

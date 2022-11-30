@@ -15,8 +15,7 @@ class MyInformationBloc extends BaseBloc<MyInformationState> {
   }
 
   Stream<User> getInformationUserStream() {
-    return userRepository.getInformationUserByIdStream(
-        authenticationRepository.getCurrentUserId());
+    return userRepository.getInformationUserByIdStream(authenticationRepository.getCurrentUserId());
   }
 
   @override

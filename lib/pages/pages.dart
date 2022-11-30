@@ -11,3 +11,4 @@ export 'add_project/add_project.dart';
 export 'change_avatar/change_avatar.dart';
 export 'notification/notification.dart';
 export 'task/task.dart';
+export 'bottom_bar/bottom_bar.dart';

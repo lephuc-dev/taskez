@@ -24,6 +24,10 @@ class HomeBloc extends BaseBloc<HomeState> {
     return projectParticipantRepository.getListProjectParticipantByUidStream(authenticationRepository.getCurrentUserId());
   }
 
+  Stream<List<ProjectParticipant>> getListFavoriteProjectByMyIdStream() {
+    return projectParticipantRepository.getListFavoriteProjectParticipantByUidStream(authenticationRepository.getCurrentUserId());
+  }
+
   Stream<Project> getProjectStream(String projectId) {
     return projectRepository.getProjectStream(projectId);
   }

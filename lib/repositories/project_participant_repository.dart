@@ -11,9 +11,17 @@ class ProjectParticipantRepository {
         .map((snapshot) => snapshot.docs.map((document) => ProjectParticipant.fromJson(document.data())).toList());
   }
 
-  Stream<List<ProjectParticipant>> getListProjectParticipantByProjectIdStream(String project_id) {
+  Stream<List<ProjectParticipant>> getListFavoriteProjectParticipantByUidStream(String userId) {
     return _projectParticipantFirestore
-        .where("project_id", isEqualTo: project_id)
+        .where("user_id", isEqualTo: userId)
+        .where("favorite", isEqualTo: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((document) => ProjectParticipant.fromJson(document.data())).toList());
+  }
+
+  Stream<List<ProjectParticipant>> getListProjectParticipantByProjectIdStream(String projectId) {
+    return _projectParticipantFirestore
+        .where("project_id", isEqualTo: projectId)
         .snapshots()
         .map((snapshot) => snapshot.docs.map((document) => ProjectParticipant.fromJson(document.data())).toList());
   }

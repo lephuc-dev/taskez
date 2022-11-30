@@ -1,11 +1,13 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import '../../models/models.dart';
 import '../../resources/resources.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
 import '../../router/router.dart';
-import 'widgets/slider_menu_view.dart';
-import 'widgets/projects_tab.dart';
+import '../../widgets/widgets.dart';
+import 'widgets/favorite_project_item.dart';
+import 'widgets/project_item.dart';
 
 class HomePage extends StatefulWidget {
   final HomeBloc bloc;
@@ -16,39 +18,29 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends BaseState<HomePage, HomeBloc>
-    with TickerProviderStateMixin {
+class _HomePageState extends BaseState<HomePage, HomeBloc> {
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
   }
-
-  static const List<Tab> _tabs = [
-    Tab(text: "Project"),
-    Tab(text: "My Task"),
-    Tab(text: "Schedule"),
-  ];
-
-  late TabController tabController;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.primaryWhite,
-        drawer: SliderMenuView(bloc),
         appBar: AppBar(
-          title: Text(
-            "Taskez",
-            style: Theme.of(context)
-                .textTheme
-                .headline5
-                ?.copyWith(color: AppColors.primaryBlack1, fontSize: 20),
+          automaticallyImplyLeading: false,
+          title: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Text(
+              "Taskez",
+              style: Theme.of(context).textTheme.headline5?.copyWith(color: AppColors.primaryBlack1, fontSize: 20),
+            ),
           ),
           centerTitle: false,
           backgroundColor: AppColors.primaryWhite,
-          elevation: 0.5,
+          elevation: 0,
           iconTheme: const IconThemeData(color: AppColors.primaryBlack1),
           actions: [
             const Padding(
@@ -63,13 +55,12 @@ class _HomePageState extends BaseState<HomePage, HomeBloc>
               child: GestureDetector(
                 onTap: () => Navigator.pushNamed(context, Routes.notification),
                 child: Badge(
-                  position: BadgePosition.topEnd(top: 6,end: -8),
+                  position: BadgePosition.topEnd(top: 6, end: -8),
                   shape: BadgeShape.circle,
                   badgeColor: AppColors.primaryRed,
                   badgeContent: const Text(
                     '3',
-                    style:
-                        TextStyle(color: AppColors.primaryWhite, fontSize: 12),
+                    style: TextStyle(color: AppColors.primaryWhite, fontSize: 12),
                   ),
                   animationType: BadgeAnimationType.slide,
                   child: const Icon(
@@ -80,22 +71,89 @@ class _HomePageState extends BaseState<HomePage, HomeBloc>
               ),
             ),
           ],
-          bottom: TabBar(
-            controller: tabController,
-            physics: const BouncingScrollPhysics(),
-            labelStyle: Theme.of(context).textTheme.subtitle1,
-            labelColor: AppColors.primaryBlack1,
-            indicatorColor: AppColors.yellow,
-            tabs: _tabs,
-          ),
         ),
-        body: TabBarView(
-          physics: const BouncingScrollPhysics(),
-          controller: tabController,
+        body: Column(
           children: [
-            ProjectsTab(bloc: widget.bloc),
-            const Center(child: Text('Content of Tab Two')),
-            const Center(child: Text('Content of Tab Three')),
+            StreamBuilder<List<ProjectParticipant>>(
+              stream: widget.bloc.getListFavoriteProjectByMyIdStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        color: AppColors.primaryGray1.withOpacity(0.3),
+                        width: MediaQuery.of(context).size.width,
+                        child: const Text("Favorite Project"),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 8.0,
+                            childAspectRatio: 2.0,
+                          ),
+                          itemBuilder: (BuildContext context, int i) {
+                            return StreamBuilder<Project>(
+                                stream: widget.bloc.getProjectStream(snapshot.data![i].projectId ?? ""),
+                                builder: (context, projectSnapshot) {
+                                  if (projectSnapshot.hasData) {
+                                    return FavoriteProjectItem(project: projectSnapshot.data!);
+                                  } else {
+                                    return Container();
+                                  }
+                                });
+                          },
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+            StreamBuilder<List<ProjectParticipant>>(
+              stream: widget.bloc.getListProjectByMyIdStream(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        color: AppColors.primaryGray1.withOpacity(0.3),
+                        width: MediaQuery.of(context).size.width,
+                        child: const Text("Project"),
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.length,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (BuildContext context, int i) {
+                          return StreamBuilder<Project>(
+                              stream: widget.bloc.getProjectStream(snapshot.data![i].projectId ?? ""),
+                              builder: (context, projectSnapshot) {
+                                if (projectSnapshot.hasData) {
+                                  return ProjectItem(project: projectSnapshot.data!);
+                                } else {
+                                  return Container();
+                                }
+                              });
+                        },
+                      ),
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
           ],
         ),
       ),

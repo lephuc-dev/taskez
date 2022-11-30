@@ -18,5 +18,6 @@ class PageDependencies {
     injector.registerFactory<Widget>(() => EditProfilesPage(injector()), instanceName: Routes.editProfiles);
     injector.registerFactory<Widget>(() => ChangeAvatarPage(injector()), instanceName: Routes.changeAvatar);
     injector.registerFactory<Widget>(() => TaskPage(injector()), instanceName: Routes.task);
+    injector.registerFactory<Widget>(() => const BottomBarPage(), instanceName: Routes.bottomBar);
   }
 }

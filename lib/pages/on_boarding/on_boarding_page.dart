@@ -65,7 +65,6 @@ class _OnBoardingPageState extends BaseState<OnBoardingPage, OnBoardingBloc> {
         children: [
           PageView.builder(
               controller: _pageController,
-              physics: const BouncingScrollPhysics(),
               onPageChanged: (value) => bloc.setIndexPage(value),
               itemCount: onBoardingData.length,
               itemBuilder: (context, index) => OnBoardingContent(

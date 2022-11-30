@@ -4,31 +4,20 @@ import 'package:get_it/get_it.dart';
 
 class Routes {
   static String get home => '/home';
-
   static String get splash => '/splash';
-
   static String get onBoarding => '/onBoarding';
-
   static String get myInformation => '/myInformation';
-
   static String get signIn => '/signIn';
-
   static String get signUp => '/signUp';
-
   static String get changePassword => '/changePassword';
-
   static String get project => '/project';
-
   static String get addProject => '/addProject';
   static String get editProfiles => '/editProfiles';
-
-  static String get workspaceInformation => '/workspaceInformation';
-
   static String get changeAvatar => '/changeAvatar';
-
   static String get notification => '/notification';
-
   static String get task => '/task';
+
+  static String get bottomBar => '/bottomBar';
 
   static getRoute(RouteSettings settings) {
     Widget widget;
