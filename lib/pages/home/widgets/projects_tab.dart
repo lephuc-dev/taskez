@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:taskez/models/models.dart';
-import 'package:taskez/router/router.dart';
+import '../../../models/models.dart';
+import '../../../router/router.dart';
 import '../../../resources/resources.dart';
 import '../../../blocs/blocs.dart';
 import '../../../widgets/widgets.dart';
@@ -48,7 +48,7 @@ class _ProjectsTabState extends State<ProjectsTab> {
           Icons.add,
           color: AppColors.primaryBlack1.withOpacity(0.7),
         ),
-        onPressed: () {},
+        onPressed: () => Navigator.pushNamed(context, Routes.addProject),
       ),
     );
   }

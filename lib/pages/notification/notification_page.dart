@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart' as fbAuth;
 import '../../models/models.dart';
 import '../../blocs/blocs.dart';
 import '../../base/base.dart';
-import '../../resources/colors.dart';
 import '../../resources/resources.dart';
 import '../../widgets/widgets.dart';
 import '../../enums/enums.dart';

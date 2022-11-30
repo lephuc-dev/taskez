@@ -15,8 +15,9 @@ class Routes {
 
   static String get notification => '/notification';
 
-
   static String get project => '/project';
+
+  static String get addProject => '/addProject';
 
   static getRoute(RouteSettings settings) {
     Widget widget;

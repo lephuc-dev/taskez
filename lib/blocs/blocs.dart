@@ -5,3 +5,4 @@ export 'home/home.dart';
 export 'sign_up/sign_up.dart';
 export 'notification/notification.dart';
 export 'project/project.dart';
+export 'add_project/add_project.dart';
