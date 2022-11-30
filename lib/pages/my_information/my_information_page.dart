@@ -6,7 +6,7 @@ import '../../widgets/widgets.dart';
 import '../../resources/resources.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
-import 'widgets/slider_menu_item.dart';
+import 'widgets/option_item.dart';
 
 class MyInformationPage extends StatefulWidget {
   final MyInformationBloc bloc;
@@ -114,35 +114,35 @@ class _MyInformationPageState extends BaseState<MyInformationPage, MyInformation
               padding: const EdgeInsets.symmetric(vertical: 32),
               child: SvgPicture.asset(VectorImageAssets.img_covid_banner),
             ),
-            SliderMenuItem(
+            OptionItem(
               title: 'My tasks',
               icon: VectorImageAssets.icon_task,
               onTap: () {
                 ///TODO: Thêm sự kiện chuyển sang màn hình MyTasks
               },
             ),
-            SliderMenuItem(
+            OptionItem(
               title: 'Notifications',
               icon: VectorImageAssets.icon_notification,
               onTap: () {
                 ///TODO: Thêm sự kiện chuyển sang màn hình Notifications
               },
             ),
-            SliderMenuItem(
+            OptionItem(
               title: 'Setting',
               icon: VectorImageAssets.icon_setting,
               onTap: () {
                 ///TODO: Thêm sự kiện chuyển sang màn hình Setting
               },
             ),
-            SliderMenuItem(
+            OptionItem(
               title: 'Help',
               icon: VectorImageAssets.icon_help,
               onTap: () {
                 ///TODO: Thêm sự kiện chuyển sang màn hình Help
               },
             ),
-            SliderMenuItem(
+            OptionItem(
               title: 'Log out',
               icon: VectorImageAssets.icon_logout,
               onTap: () {

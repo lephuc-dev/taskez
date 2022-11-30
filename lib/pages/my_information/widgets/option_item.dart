@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:taskez/widgets/inkwell_wrapper.dart';
-
+import '../../../widgets/inkwell_wrapper.dart';
 import '../../../resources/resources.dart';
 
-class SliderMenuItem extends StatelessWidget {
+class OptionItem extends StatelessWidget {
   final String title;
   final String icon;
   final void Function() onTap;
 
-  const SliderMenuItem({Key? key, required this.title, required this.icon, required this.onTap}) : super(key: key);
+  const OptionItem({Key? key, required this.title, required this.icon, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
