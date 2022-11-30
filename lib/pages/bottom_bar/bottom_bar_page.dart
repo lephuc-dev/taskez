@@ -98,11 +98,11 @@ class _BottomBarPageState extends State<BottomBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home,
+              Icons.person,
               color: AppColors.primaryGray1,
             ),
             activeIcon: Icon(
-              Icons.home,
+              Icons.person,
               color: AppColors.primaryBlack1,
             ),
             label: "Settings",
