@@ -33,15 +33,15 @@ class AppElevatedButton extends StatelessWidget {
         child: Center(
             child: Row(
           children: [
-            Icon(
-              icon,
-              color: iconColor ?? AppColors.primaryBlack1,
+              Icon(
+                icon,
+                color: iconColor ?? AppColors.primaryBlack1,
             ),
-            SizedBox(
-              width: 5,
+              SizedBox(
+                width: 5,
             ),
-            Text(content,
-                style: textStyle ?? Theme.of(context).textTheme.button),
+              Text(content,
+                  style: textStyle ?? Theme.of(context).textTheme.button),
           ],
         )),
       ),

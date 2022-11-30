@@ -1,8 +1,13 @@
 export 'splash/splash.dart';
 export 'on_boarding/on_boarding.dart';
+export 'my_information/my_information.dart';
 export 'sign_in/sign_in.dart';
 export 'home/home.dart';
 export 'sign_up/sign_up.dart';
 export 'notification/notification.dart';
 export 'project/project.dart';
 export 'add_project/add_project.dart';
+export 'change_avatar/change_avatar.dart';
+export 'task/task.dart';
+export 'edit_profiles/edit_prodfiles.dart';
+export 'change_password/change_password.dart';

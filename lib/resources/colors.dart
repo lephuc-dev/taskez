@@ -4,6 +4,7 @@ class AppColors {
   static const Color backgroundSliderMenuDarkMode = Color(0xFF121212);
   static const Color backgroundDarkMode = Color(0xFF191925);
   static const Color primaryWhite = Color(0xFFFFFFFF);
+  static const Color backgroundWhite = Color(0xFFFDFDFD);
   static const Color primaryBlack1 = Color(0xFF000000);
   static const Color primaryBlack2 = Color(0xFF010101);
   static const Color primaryBlack3 = Color(0xFF313131);
@@ -15,9 +16,12 @@ class AppColors {
   static const Color primaryBlue1 = Color(0xFF0096FF);
   static const Color primaryGreen = Color(0xFF009F0B);
   static const Color primaryPurple = Color(0xFF8560F9);
+  static const Color primaryGrey = Color(0xFF9A9A9A);
+  static const Color primaryError = Color(0xFFF24147);
   static const Color error = Color(0xFFF24147);
   static const Color splashInkWell = Color(0xFFCAECFD);
   static const Color yellow = Color(0xFFFFD101);
   static const Color darkSilver = Color(0xFF707070);
   static const Color magnolia = Color(0xFFF5F5F5);
+  static const Color skyblue = Color(0xFF8CD8E7);
 }

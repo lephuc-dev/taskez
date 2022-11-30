@@ -1,0 +1,1 @@
+export 'change_avatar_page.dart';
