@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:taskez/base/base.dart';
-import 'package:taskez/blocs/change_password/change_password.dart';
-import 'package:taskez/enums/enums.dart';
-import 'package:taskez/resources/resources.dart';
-import 'package:taskez/router/router.dart';
-import 'package:taskez/widgets/widgets.dart';
+import '../../base/base.dart';
+import '../../enums/enums.dart';
+import '../../resources/resources.dart';
+import '../../widgets/widgets.dart';
+import '../../blocs/blocs.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   final ChangePasswordBloc bloc;
@@ -15,11 +14,21 @@ class ChangePasswordPage extends StatefulWidget {
   State<ChangePasswordPage> createState() => _ChangePasswordState();
 }
 
-class _ChangePasswordState
-    extends BaseState<ChangePasswordPage, ChangePasswordBloc> {
+class _ChangePasswordState extends BaseState<ChangePasswordPage, ChangePasswordBloc> {
   @override
   void initState() {
     super.initState();
+    bloc.getInformationUserStream().first.then((value) {
+      email = value.email ?? "";
+    });
+  }
+
+  @override
+  void dispose() {
+    passwordTextController.dispose();
+    newPasswordTextController.dispose();
+    rePasswordTextController.dispose();
+    super.dispose();
   }
 
   final formKey = GlobalKey<FormState>();
@@ -27,15 +36,15 @@ class _ChangePasswordState
   TextEditingController newPasswordTextController = TextEditingController();
   TextEditingController rePasswordTextController = TextEditingController();
 
+  late String email;
+
   void onUpdatePasswordClick() {
     if (formKey.currentState?.validate() == true) {
       String password = passwordTextController.text.toString().trim();
       String newPassword = newPasswordTextController.text.toString().trim();
       String confirmPassword = rePasswordTextController.text.toString().trim();
 
-      bloc
-          .getInformationUserStream()
-          .map((event) => bloc.onSetEmail(event.email ?? ""));
+      bloc.getInformationUserStream().map((event) => bloc.onSetEmail(event.email ?? ""));
 
       bloc.onSetChangePasswordState(true);
 
@@ -44,14 +53,18 @@ class _ChangePasswordState
         return;
       }
 
-      ///Todo: kiểm tra mật khẩu
       bloc.onSignIn(
-        bloc.email.toString(), 
-        password, 
+        email,
+        password,
         () {
-          bloc.onUpdatePassword(newPassword, () => onUpdateSuccess(), (error) => onUpdateError(error));
-        }, 
-        (msg) => onCheckPasswordFail(msg));
+          bloc.onUpdatePassword(
+            newPassword,
+            () => onUpdateSuccess(),
+            (error) => onUpdateError(error),
+          );
+        },
+        (msg) => onCheckPasswordFail(msg),
+      );
     }
   }
 
@@ -61,7 +74,7 @@ class _ChangePasswordState
       context: context,
       builder: (context) {
         return CommonDialog(
-          title: "Confirm Password Failed",
+          title: "Failed",
           description: "The password confirms does not match",
           contentButton: "Close",
           onTap: () => Navigator.pop(context),
@@ -76,12 +89,12 @@ class _ChangePasswordState
       context: context,
       builder: (context) {
         return CommonDialog(
-          title: "Update passowrd Success",
+          title: "Update password Success",
           description: "Success!",
           contentButton: "Close",
           onTap: () => {
             Navigator.pop(context),
-                  Navigator.pop(context),
+            Navigator.pop(context),
           },
         );
       },
@@ -94,7 +107,7 @@ class _ChangePasswordState
       context: context,
       builder: (context) {
         return CommonDialog(
-            title: "Update Password Failed",
+            title: "Failed",
             description: error,
             contentButton: "Close",
             onTap: () => {
@@ -115,7 +128,6 @@ class _ChangePasswordState
             description: error,
             contentButton: "Close",
             onTap: () => {
-                  Navigator.pop(context),
                   Navigator.pop(context),
                 });
       },
@@ -143,29 +155,20 @@ class _ChangePasswordState
                         children: [
                           Text(
                             "Change Password",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline5
-                                ?.copyWith(fontSize: 32),
+                            style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 32),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
                               "Change your password",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(color: AppColors.primaryGray1),
+                              style: Theme.of(context).textTheme.subtitle2?.copyWith(color: AppColors.primaryGray1),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 32.0),
                             child: Text(
                               "Password",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(fontSize: 20),
+                              style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20),
                             ),
                           ),
                           CommonTextField(
@@ -179,10 +182,7 @@ class _ChangePasswordState
                             padding: const EdgeInsets.only(top: 32.0),
                             child: Text(
                               "New Password",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(fontSize: 20),
+                              style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20),
                             ),
                           ),
                           CommonTextField(
@@ -196,10 +196,7 @@ class _ChangePasswordState
                             padding: const EdgeInsets.only(top: 32.0),
                             child: Text(
                               "Cofirm new password",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(fontSize: 20),
+                              style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20),
                             ),
                           ),
                           CommonTextField(

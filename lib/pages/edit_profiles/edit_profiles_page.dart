@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:taskez/base/base.dart';
-import 'package:taskez/blocs/edit_profiles/edit_prodfiles.dart';
-import 'package:taskez/enums/enums.dart';
-import 'package:taskez/resources/colors.dart';
-import 'package:taskez/widgets/widgets.dart';
+import '../../base/base.dart';
+import '../../enums/enums.dart';
+import '../../resources/colors.dart';
+import '../../widgets/widgets.dart';
+import '../../blocs/blocs.dart';
 
 class EditProfilesPage extends StatefulWidget {
-  final EditProfilesBloc bloc;
+  final EditProfileBloc bloc;
 
   const EditProfilesPage(this.bloc, {Key? key}) : super(key: key);
 
@@ -14,7 +14,7 @@ class EditProfilesPage extends StatefulWidget {
   State<EditProfilesPage> createState() => _EditProfilesState();
 }
 
-class _EditProfilesState extends BaseState<EditProfilesPage, EditProfilesBloc> {
+class _EditProfilesState extends BaseState<EditProfilesPage, EditProfileBloc> {
   @override
   void initState() {
     super.initState();
@@ -23,7 +23,14 @@ class _EditProfilesState extends BaseState<EditProfilesPage, EditProfilesBloc> {
     });
   }
 
+  @override
+  void dispose() {
+    nameTextController.dispose();
+    super.dispose();
+  }
+
   final formKey = GlobalKey<FormState>();
+
   TextEditingController nameTextController = TextEditingController();
 
   void onUpdateUserClick() {
@@ -42,8 +49,8 @@ class _EditProfilesState extends BaseState<EditProfilesPage, EditProfilesBloc> {
       context: context,
       builder: (context) {
         return CommonDialog(
-          title: "Update User Success",
-          description: "Success!",
+          title: "Success",
+          description: "Your name is changed",
           contentButton: "Close",
           onTap: () => {
             Navigator.pop(context),
@@ -60,7 +67,7 @@ class _EditProfilesState extends BaseState<EditProfilesPage, EditProfilesBloc> {
       context: context,
       builder: (context) {
         return CommonDialog(
-          title: "Update User Failed",
+          title: "Failed",
           description: error,
           contentButton: "Close",
           onTap: () => Navigator.pop(context),
@@ -89,24 +96,21 @@ class _EditProfilesState extends BaseState<EditProfilesPage, EditProfilesBloc> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              "Edit profiles",
-                              style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 32),
-                            ),
+                            "Edit your name",
+                            style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 32),
+                          ),
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Text(
-                                "Update your informations",
-                                style: Theme.of(context).textTheme.subtitle2?.copyWith(color: AppColors.primaryGray1),
-                              ),
+                                "Change to new name",
+                              style: Theme.of(context).textTheme.subtitle2?.copyWith(color: AppColors.primaryGray1),
+                            ),
                             ),
                           Padding(
                             padding: const EdgeInsets.only(top: 32.0),
                             child: Text(
-                              "Change your name",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(fontSize: 20),
+                              "Name",
+                              style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 20),
                             ),
                           ),
                           CommonTextField(
@@ -117,7 +121,7 @@ class _EditProfilesState extends BaseState<EditProfilesPage, EditProfilesBloc> {
                           Padding(
                             padding: const EdgeInsets.only(top: 64.0),
                             child: CommonButton(
-                              content: 'Save',
+                              content: 'Update',
                               onTap: () => onUpdateUserClick(),
                             ),
                           )
@@ -131,5 +135,5 @@ class _EditProfilesState extends BaseState<EditProfilesPage, EditProfilesBloc> {
   }
 
   @override
-  EditProfilesBloc get bloc => widget.bloc;
+  EditProfileBloc get bloc => widget.bloc;
 }

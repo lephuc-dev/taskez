@@ -42,7 +42,7 @@ class NotifyComponent extends StatelessWidget {
           ? const BoxDecoration(
               border: Border(
                 left: BorderSide(
-                  color: AppColors.primaryBlue1,
+                  color: AppColors.primaryBlue,
                   width: 4.0,
                 ),
               ),

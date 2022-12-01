@@ -9,5 +9,5 @@ export 'project/project.dart';
 export 'add_project/add_project.dart';
 export 'change_avatar/change_avatar.dart';
 export 'task/task.dart';
-export 'edit_profiles/edit_prodfiles.dart';
+export 'edit_profile/edit_profile.dart';
 export 'change_password/change_password.dart';

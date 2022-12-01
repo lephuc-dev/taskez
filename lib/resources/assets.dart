@@ -18,10 +18,7 @@ class VectorImageAssets {
 
   // START FROM HERE
   static const String icon_logo = '$_pathPrefix/icon_logo.svg';
-  static const String icon_help = '$_pathPrefix/icon_help.svg';
-  static const String icon_logout = '$_pathPrefix/icon_logout.svg';
-  static const String icon_notification = '$_pathPrefix/icon_notification.svg';
-  static const String icon_setting = '$_pathPrefix/icon_setting.svg';
-  static const String icon_task = '$_pathPrefix/icon_task.svg';
-  static const String img_covid_banner = '$_pathPrefix/img_covid_banner.svg';
+  static const String ic_setting = '$_pathPrefix/ic_setting.svg';
+  static const String ic_help = '$_pathPrefix/ic_help.svg';
+  static const String ic_logout = '$_pathPrefix/ic_logout.svg';
 }

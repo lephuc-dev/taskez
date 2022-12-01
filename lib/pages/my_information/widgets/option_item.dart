@@ -15,21 +15,21 @@ class OptionItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
       child: InkWellWrapper(
-          splashColor: AppColors.splashInkWell.withOpacity(0.2),
-          hoverColor: AppColors.splashInkWell.withOpacity(0.2),
-          highlightColor: AppColors.splashInkWell.withOpacity(0.2),
           borderRadius: BorderRadius.circular(4),
           onTap: onTap,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12),
             child: Row(
               children: [
-                SvgPicture.asset(icon),
+                SvgPicture.asset(
+                  icon,
+                  color: AppColors.primaryBlack1,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0),
                   child: Text(
                     title,
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                 )
               ],

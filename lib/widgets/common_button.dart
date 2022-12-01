@@ -7,25 +7,27 @@ class CommonButton extends StatelessWidget {
   final String content;
   final Color? buttonColor;
   final BorderRadius? borderRadius;
+  final EdgeInsets? padding;
   final TextStyle? textStyle;
 
   const CommonButton({
     Key? key,
     required this.content,
     required this.onTap,
-    this.buttonColor = AppColors.yellow,
+    this.buttonColor,
     this.borderRadius,
+    this.padding,
     this.textStyle,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWellWrapper(
-      borderRadius: borderRadius ?? BorderRadius.circular(8),
+      borderRadius: borderRadius ?? BorderRadius.circular(4),
       onTap: onTap,
-      color: buttonColor,
+      color: buttonColor ?? AppColors.primaryBlack1,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: padding ?? const EdgeInsets.all(16),
         child: Center(child: Text(content, style: textStyle ?? Theme.of(context).textTheme.button)),
       ),
     );

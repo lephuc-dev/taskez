@@ -11,7 +11,7 @@ class BlocDependencies {
     injector.registerFactory<AddProjectBloc>(() => AddProjectBloc(injector()));
     injector.registerFactory<MyInformationBloc>(() => MyInformationBloc(injector(), injector()));
     injector.registerFactory<ChangePasswordBloc>(() => ChangePasswordBloc(injector(), injector()));
-    injector.registerFactory<EditProfilesBloc>(() => EditProfilesBloc(injector(), injector()));
+    injector.registerFactory<EditProfileBloc>(() => EditProfileBloc(injector(), injector()));
     injector.registerFactory<ChangeAvatarBloc>(() => ChangeAvatarBloc(injector(), injector()));
     injector.registerFactory<NotificationBloc>(() => NotificationBloc(injector(), injector(), injector(), injector()));
     injector.registerFactory<ProjectBloc>(() => ProjectBloc(injector(), injector(), injector(), injector()));

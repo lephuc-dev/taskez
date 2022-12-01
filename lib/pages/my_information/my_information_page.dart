@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'widgets/task_item.dart';
 import 'widgets/edit_account_bottom_sheet.dart';
 import 'widgets/option_item.dart';
 import '../../models/models.dart';
-import '../../router/router.dart';
 import '../../widgets/widgets.dart';
 import '../../resources/resources.dart';
 import '../../base/base.dart';
@@ -28,70 +27,51 @@ class _MyInformationPageState extends BaseState<MyInformationPage, MyInformation
           style: Theme.of(context).textTheme.headline5?.copyWith(fontSize: 20),
         ),
         automaticallyImplyLeading: false,
-        elevation: 0,
+        elevation: 0.5,
         backgroundColor: AppColors.primaryWhite,
-        actions: [
-          InkWell(
-            onTap: () => showEditAccountBottomSheet(),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Center(
-                child: Text(
-                  "Edit account",
-                  style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 14, color: AppColors.primaryGreen),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
       backgroundColor: AppColors.primaryWhite,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               StreamBuilder<User>(
                   stream: widget.bloc.getInformationUserStream(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return Row(
+                      return Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           if (snapshot.data?.avatar == "")
                             AvatarWithName(
                               name: snapshot.data?.name ?? "?",
                               fontSize: 20,
-                              shapeSize: 70,
+                              shapeSize: 50,
                               count: 2,
                             )
                           else
                             CircleAvatar(
-                              radius: 35,
-                              backgroundColor: AppColors.yellow,
+                              radius: 50,
+                              backgroundColor: AppColors.primaryBlack1,
                               child: CircleAvatar(
-                                radius: 30,
+                                radius: 49,
                                 backgroundImage: NetworkImage(snapshot.data?.avatar ?? ""),
                               ),
                             ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  snapshot.data?.name ?? "Unknown",
-                                  style: Theme.of(context).textTheme.headline4?.copyWith(fontSize: 20),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 4.0),
-                                  child: Text(
-                                    snapshot.data?.email ?? "Unknown",
-                                    style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 14),
-                                  ),
-                                ),
-                              ],
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12.0),
+                            child: Text(
+                              snapshot.data?.name ?? "Unknown",
+                              style: Theme.of(context).textTheme.headline4?.copyWith(fontSize: 20),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: Text(
+                              snapshot.data?.email ?? "Unknown",
+                              style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: 14),
                             ),
                           ),
                         ],
@@ -101,44 +81,95 @@ class _MyInformationPageState extends BaseState<MyInformationPage, MyInformation
                     }
                   }),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32),
-                child: SvgPicture.asset(VectorImageAssets.img_covid_banner),
+                padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                child: CommonButton(
+                  content: "Edit your account",
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  textStyle: Theme.of(context).textTheme.button?.copyWith(fontSize: 14),
+                  onTap: () => showEditAccountBottomSheet(),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Your task",
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
+                          fontSize: 14,
+                        ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: GridView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                    childAspectRatio: 2.0,
+                  ),
+                  children: const [
+                    TaskItem(
+                      color: AppColors.primaryBlue,
+                      name: "No expiration date",
+                      amount: 0,
+                    ),
+                    TaskItem(
+                      color: AppColors.primaryGreen,
+                      name: "Out of date",
+                      amount: 0,
+                    ),
+                    TaskItem(
+                      color: AppColors.yellow,
+                      name: "Expires next week",
+                      amount: 0,
+                    ),
+                    TaskItem(
+                      color: AppColors.primaryRed,
+                      name: "Expires next month",
+                      amount: 0,
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 4),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Other",
+                    style: Theme.of(context).textTheme.headline5?.copyWith(
+                          fontSize: 14,
+                        ),
+                  ),
+                ),
               ),
               OptionItem(
-                title: 'My tasks',
-                icon: VectorImageAssets.icon_task,
+                title: 'Setting',
+                icon: VectorImageAssets.ic_setting,
                 onTap: () {
                   ///TODO: Thêm sự kiện chuyển sang màn hình MyTasks
                 },
               ),
               OptionItem(
-                title: 'Notifications',
-                icon: VectorImageAssets.icon_notification,
-                onTap: () {
-                  ///TODO: Thêm sự kiện chuyển sang màn hình Notifications
-                },
-              ),
-              OptionItem(
-                title: 'Setting',
-                icon: VectorImageAssets.icon_setting,
-                onTap: () {
-                  ///TODO: Thêm sự kiện chuyển sang màn hình Setting
-                },
-              ),
-              OptionItem(
                 title: 'Help',
-                icon: VectorImageAssets.icon_help,
+                icon: VectorImageAssets.ic_help,
                 onTap: () {
-                  ///TODO: Thêm sự kiện chuyển sang màn hình Help
+                  ///TODO: Thêm sự kiện chuyển sang màn hình MyTasks
                 },
               ),
               OptionItem(
                 title: 'Log out',
-                icon: VectorImageAssets.icon_logout,
+                icon: VectorImageAssets.ic_logout,
                 onTap: () {
-                  ///TODO: Thêm sự kiện đăng xuất
+                  ///TODO: Thêm sự kiện chuyển sang màn hình MyTasks
                 },
-              )
+              ),
             ],
           ),
         ),
