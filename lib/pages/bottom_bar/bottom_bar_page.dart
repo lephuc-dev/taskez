@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:taskez/pages/my_information/my_information.dart';
 import '../home/home.dart';
 import '../notification/notification.dart';
@@ -68,50 +69,50 @@ class _BottomBarPageState extends State<BottomBarPage> {
         showSelectedLabels: false,
         showUnselectedLabels: false,
         selectedIconTheme: const IconThemeData(color: Colors.black),
-        items: const <BottomNavigationBarItem>[
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
+            icon: SvgPicture.asset(
+              VectorImageAssets.ic_home,
               color: AppColors.primaryGray1,
             ),
-            activeIcon: Icon(
-              Icons.home,
+            activeIcon: SvgPicture.asset(
+              VectorImageAssets.ic_home,
               color: AppColors.primaryBlack1,
             ),
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.book,
+            icon: SvgPicture.asset(
+              VectorImageAssets.ic_schedule,
               color: AppColors.primaryGray1,
             ),
-            activeIcon: Icon(
-              Icons.book,
+            activeIcon: SvgPicture.asset(
+              VectorImageAssets.ic_schedule,
               color: AppColors.primaryBlack1,
             ),
-            label: "Schedule",
+            label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.notifications,
+            icon: SvgPicture.asset(
+              VectorImageAssets.ic_notification,
               color: AppColors.primaryGray1,
             ),
-            activeIcon: Icon(
-              Icons.notifications,
+            activeIcon: SvgPicture.asset(
+              VectorImageAssets.ic_notification,
               color: AppColors.primaryBlack1,
             ),
-            label: "Notification",
+            label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
+            icon: SvgPicture.asset(
+              VectorImageAssets.ic_user,
               color: AppColors.primaryGray1,
             ),
-            activeIcon: Icon(
-              Icons.person,
+            activeIcon: SvgPicture.asset(
+              VectorImageAssets.ic_user,
               color: AppColors.primaryBlack1,
             ),
-            label: "Settings",
+            label: "Home",
           ),
         ],
         currentIndex: _selectedIndex,

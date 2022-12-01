@@ -21,4 +21,10 @@ class VectorImageAssets {
   static const String ic_setting = '$_pathPrefix/ic_setting.svg';
   static const String ic_help = '$_pathPrefix/ic_help.svg';
   static const String ic_logout = '$_pathPrefix/ic_logout.svg';
+  static const String ic_password = '$_pathPrefix/ic_password.svg';
+  static const String ic_avatar = '$_pathPrefix/ic_avatar.svg';
+  static const String ic_user = '$_pathPrefix/ic_user.svg';
+  static const String ic_home = '$_pathPrefix/ic_home.svg';
+  static const String ic_notification = '$_pathPrefix/ic_notification.svg';
+  static const String ic_schedule = '$_pathPrefix/ic_schedule.svg';
 }

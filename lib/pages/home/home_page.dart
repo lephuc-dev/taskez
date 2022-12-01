@@ -78,10 +78,15 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                   return Column(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(8),
-                        color: AppColors.primaryGray1.withOpacity(0.3),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                        color: AppColors.primaryGray2,
                         width: MediaQuery.of(context).size.width,
-                        child: const Text("Favorite Project"),
+                        child: Text(
+                          "Favorite Project",
+                          style: Theme.of(context).textTheme.headline5?.copyWith(
+                                fontSize: 14,
+                              ),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -123,10 +128,15 @@ class _HomePageState extends BaseState<HomePage, HomeBloc> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(8),
-                        color: AppColors.primaryGray1.withOpacity(0.3),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                        color: AppColors.primaryGray2,
                         width: MediaQuery.of(context).size.width,
-                        child: const Text("Project"),
+                        child: Text(
+                          "Project",
+                          style: Theme.of(context).textTheme.headline5?.copyWith(
+                                fontSize: 14,
+                              ),
+                        ),
                       ),
                       ListView.builder(
                         shrinkWrap: true,

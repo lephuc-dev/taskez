@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:taskez/widgets/inkwell_wrapper.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:taskez/resources/assets.dart';
+import '../../../widgets/inkwell_wrapper.dart';
 import '../../../router/router.dart';
 
 class EditAccountBottomSheet extends StatelessWidget {
@@ -15,21 +16,21 @@ class EditAccountBottomSheet extends StatelessWidget {
         children: [
           optionEdit(context,
               name: "Edit name",
-              iconData: Icons.person,
+              icon: VectorImageAssets.ic_user,
               onTap: () => {
                     Navigator.pop(context),
                     Navigator.pushNamed(context, Routes.editProfiles),
                   }),
           optionEdit(context,
               name: "Edit avatar",
-              iconData: Icons.account_circle,
+              icon: VectorImageAssets.ic_avatar,
               onTap: () => {
                     Navigator.pop(context),
                     Navigator.pushNamed(context, Routes.changeAvatar),
                   }),
           optionEdit(context,
               name: "Edit password",
-              iconData: Icons.lock,
+              icon: VectorImageAssets.ic_password,
               onTap: () => {
                     Navigator.pop(context),
                     Navigator.pushNamed(context, Routes.changePassword),
@@ -42,7 +43,7 @@ class EditAccountBottomSheet extends StatelessWidget {
   Widget optionEdit(
     BuildContext context, {
     required String name,
-    required IconData iconData,
+    required String icon,
     required Function() onTap,
   }) {
     return InkWellWrapper(
@@ -51,7 +52,7 @@ class EditAccountBottomSheet extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Row(
           children: [
-            Icon(iconData),
+            SvgPicture.asset(icon),
             const SizedBox(width: 16),
             Text(
               name,
