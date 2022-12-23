@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../base/base.dart';
 import '../../blocs/blocs.dart';
 import '../../resources/resources.dart';
@@ -16,87 +17,66 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends BaseState<SplashPage, SplashBloc> {
+  int? isBoardViewed;
+  late SharedPreferences sharedPreferences;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2)).then(
-      (value) => Navigator.pushNamedAndRemoveUntil(
-        context,
-        Routes.onBoarding,
-        (route) => false,
-      ),
-    );
+    goToNextPage();
+  }
+
+  void goToNextPage() async {
+    if (await bloc.getBoardViewed()) {
+      Future.delayed(const Duration(seconds: 1)).then(
+            (value) => Navigator.pushNamedAndRemoveUntil(
+          context,
+          Routes.signIn,
+              (route) => false,
+        ),
+      );
+    }
+    else {
+      Future.delayed(const Duration(seconds: 1)).then(
+            (value) => Navigator.pushNamedAndRemoveUntil(
+          context,
+          Routes.onBoarding,
+              (route) => false,
+        ),
+      );
+    }
   }
 
   Future<bool> onWillPop() async => false;
 
-  final double imageSize = 20;
-
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return WillPopScope(
       onWillPop: onWillPop,
       child: Scaffold(
-        backgroundColor: AppColors.primaryWhite,
-        body: Stack(
-          children: [
-            const Image(
-              width: double.infinity,
-              height: double.infinity,
-              image: AssetImage(ImageAssets.img_splash),
-              fit: BoxFit.cover,
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColors.primaryBlack1.withOpacity(0.5),
-                    AppColors.primaryBlack1.withOpacity(0.3),
-                    AppColors.primaryBlack1.withOpacity(0.005),
-                  ],
+        backgroundColor: AppColors.mediumPersianBlue,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                VectorImageAssets.icon_logo,
+                height: 120,
+                width: 120,
+                color: AppColors.primaryWhite,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Text(
+                  'taskez',
+                  style: Theme.of(context).textTheme.headline1?.copyWith(
+                        fontSize: 48,
+                        color: AppColors.primaryWhite,
+                      ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 64.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'A MAGIC WAY TO MANAGE YOUR TASKS',
-                    style: Theme.of(context).textTheme.headline4?.copyWith(
-                          fontSize: 32,
-                          height: 1.4,
-                          color: AppColors.primaryWhite,
-                        ),
-                    textAlign: TextAlign.start,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(VectorImageAssets.icon_logo, height: imageSize, width: imageSize),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            'taskez',
-                            style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                                  fontSize: 24,
-                                  color: AppColors.primaryWhite,
-                                ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

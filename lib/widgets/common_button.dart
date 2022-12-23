@@ -25,7 +25,7 @@ class CommonButton extends StatelessWidget {
     return InkWellWrapper(
       borderRadius: borderRadius ?? BorderRadius.circular(4),
       onTap: onTap,
-      color: buttonColor ?? AppColors.primaryBlack1,
+      color: buttonColor ?? AppColors.mediumPersianBlue,
       child: Container(
         padding: padding ?? const EdgeInsets.all(16),
         child: Center(child: Text(content, style: textStyle ?? Theme.of(context).textTheme.button)),

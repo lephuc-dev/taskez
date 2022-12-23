@@ -48,7 +48,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
 
   void onLogInSuccess() {
     bloc.onSetCheckingSignInState(false);
-    Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, Routes.bottomBar, (route) => false);
   }
 
   void onLogInError(String error) {
@@ -161,7 +161,7 @@ class _SignInPageState extends BaseState<SignInPage, SignInBloc> {
                                       const SizedBox(width: 8),
                                       Text(
                                         "Sign Up",
-                                        style: Theme.of(context).textTheme.headline3?.copyWith(color: AppColors.yellow),
+                                        style: Theme.of(context).textTheme.headline3?.copyWith(color: AppColors.mediumPersianBlue),
                                       ),
                                     ],
                                   ),

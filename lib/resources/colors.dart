@@ -16,4 +16,5 @@ class AppColors {
   static const Color error = Color(0xFFF24147);
   static const Color splashInkWell = Color(0xFFCAECFD);
   static const Color yellow = Color(0xFFFFD101);
+  static const Color mediumPersianBlue = Color(0xFF026AA7);
 }
